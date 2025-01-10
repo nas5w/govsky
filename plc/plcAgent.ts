@@ -22,6 +22,7 @@ export class PlcAgent {
   private limit = 1000;
   private enableExport = false;
   private maxHandleLength = 263;
+  private currentTimeLag = 5 * 60_000;
 
   constructor(private latestRecord: Date) {}
 
@@ -31,11 +32,24 @@ export class PlcAgent {
 
   async startExport(callback: DataCallback) {
     this.enableExport = true;
+
+    if (Date.now() - this.latestRecord.getTime() < this.currentTimeLag) {
+      console.log("Backfill up-to-date. Waiting...");
+      await delay(this.backoffDelay);
+      if (this.enableExport) {
+        this.startExport(callback);
+      }
+      return;
+    }
+
     const data = await this.getData();
+
     if (data) {
       callback(data);
     }
+
     await delay(data ? this.requestDelayMs : this.backoffDelay);
+
     if (this.enableExport) {
       this.startExport(callback);
     }
