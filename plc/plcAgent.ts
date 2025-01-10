@@ -21,6 +21,7 @@ export class PlcAgent {
   private backoffDelay = 120_000;
   private limit = 1000;
   private enableExport = false;
+  private maxHandleLength = 263;
 
   constructor(private latestRecord: Date) {}
 
@@ -71,9 +72,16 @@ export class PlcAgent {
 
       for (const handle of akas) {
         if (!handle.endsWith(".bsky.social")) {
+          const shortenedHandle = handle.replace(/^at:\/\//, "");
+
+          // Maximum domain is 263 characters. Anything higher is shenanigans.
+          if (shortenedHandle.length > this.maxHandleLength) {
+            continue;
+          }
+
           added.push({
             did: rowJson.did,
-            handle: handle.replace(/^at:\/\//, ""),
+            handle: shortenedHandle,
           });
         }
       }
