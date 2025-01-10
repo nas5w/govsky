@@ -19,7 +19,7 @@ function delay(ms: number) {
 export class PlcAgent {
   private requestDelayMs = 500;
   private backoffDelay = 120_000;
-  private limit = 10;
+  private limit = 1000;
   private enableExport = false;
 
   constructor(private latestRecord: Date) {}
@@ -71,7 +71,10 @@ export class PlcAgent {
 
       for (const handle of akas) {
         if (!handle.endsWith(".bsky.social")) {
-          added.push({ did: rowJson.did, handle });
+          added.push({
+            did: rowJson.did,
+            handle: handle.replace(/^at:\/\//, ""),
+          });
         }
       }
     }
