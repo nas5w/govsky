@@ -1,9 +1,14 @@
-type PlcRecord = {
+export type PlcRecord = {
   did: string;
   handle: string;
 };
 
-type DataCallback = (data: PlcRecord[]) => void;
+type CallbackPayload = {
+  records: PlcRecord[];
+  latestRecord: Date;
+};
+
+type DataCallback = (data: CallbackPayload) => void;
 
 function delay(ms: number) {
   return new Promise((res) => {
@@ -14,21 +19,32 @@ function delay(ms: number) {
 export class PlcAgent {
   private requestDelayMs = 500;
   private backoffDelay = 120_000;
+  private limit = 10;
+  private enableExport = false;
 
   constructor(private latestRecord: Date) {}
 
-  async export(callback: DataCallback) {
+  stopExport() {
+    this.enableExport = false;
+  }
+
+  async startExport(callback: DataCallback) {
+    this.enableExport = true;
     const data = await this.getData();
     if (data) {
       callback(data);
     }
-    delay(data ? this.requestDelayMs : this.backoffDelay);
-    this.export(callback);
+    await delay(data ? this.requestDelayMs : this.backoffDelay);
+    if (this.enableExport) {
+      this.startExport(callback);
+    }
   }
 
-  private async getData(): Promise<PlcRecord[] | null> {
+  private async getData(): Promise<CallbackPayload | null> {
     const res = await fetch(
-      `https://plc.directory/export?count=1000&after=${this.latestRecord.toISOString()}`
+      `https://plc.directory/export?count=${
+        this.limit
+      }&after=${this.latestRecord.toISOString()}`
     );
 
     if (res.status === 429) {
@@ -49,7 +65,9 @@ export class PlcAgent {
         this.latestRecord = recordDate;
       }
 
-      const akas = rowJson.operation.alsoKnownAs || [];
+      const akas = rowJson.operation.handle
+        ? [rowJson.operation.handle]
+        : rowJson.operation.alsoKnownAs || [];
 
       for (const handle of akas) {
         if (!handle.endsWith(".bsky.social")) {
@@ -57,5 +75,7 @@ export class PlcAgent {
         }
       }
     }
+
+    return { records: added, latestRecord: this.latestRecord };
   }
 }
