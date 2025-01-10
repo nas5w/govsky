@@ -75,7 +75,9 @@ export class PlcAgent {
           const shortenedHandle = handle.replace(/^at:\/\//, "");
 
           // Maximum domain is 263 characters. Anything higher is shenanigans.
-          if (shortenedHandle.length > this.maxHandleLength) {
+          if (
+            shortenedHandle.replace(/\./g, "").length > this.maxHandleLength
+          ) {
             continue;
           }
 

@@ -48,3 +48,13 @@ async function main() {
 }
 
 main();
+
+// Disconnect from DB on shutdown
+["SIGINT", "SIGTERM", "SIGQUIT"].forEach((signal) =>
+  process.on(signal, async () => {
+    console.log("Disconnecting from DB...");
+    await prisma.$disconnect();
+    console.log("Exiting proess...");
+    process.exit();
+  })
+);
