@@ -3,6 +3,7 @@
     "start": "ts-node index.ts"
   },
   "dependencies": {
+    "@atproto/api": "^0.13.26",
     "@prisma/client": "^6.2.1",
     "@types/node": "^22.10.5",
     "ts-node": "^10.9.2",

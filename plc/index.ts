@@ -3,16 +3,20 @@ const port = process.env.PORT || 3000;
 import { backfill } from "./backfill";
 import { PrismaClient } from "@prisma/client";
 import { Cache } from "./cache";
+import { validate } from "./validate";
+
+const allowedExtensions = [".gov", ".gov.uk", ".gov.br"];
 
 // Start process that keeps PLC directory up-to-date
 backfill();
+
+// Start process to validate relevant extensions
+validate(allowedExtensions);
 
 // Simple HTTP server for API
 const prisma = new PrismaClient();
 
 const cache = new Cache();
-
-const allowedExtensions = [".gov", ".gov.uk", ".gov.br"];
 
 http
   .createServer(async function (req, res) {
@@ -43,7 +47,9 @@ http
       const where: Record<string, string> = { handlePart1 };
       if (handlePart2) where.handlePart2 = handlePart2;
       if (handlePart3) where.handlePart3 = handlePart3;
-      const data = await prisma.user.findMany({ where });
+      const data = await prisma.user.findMany({
+        where: { ...where, is_valid: true },
+      });
       handles = data.map((el) => el.handle);
       // Five minute cache
       cache.set(extension, handles, 5 * 60_000);
