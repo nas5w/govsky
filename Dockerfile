@@ -32,7 +32,7 @@ RUN rm -rf common/temp
 RUN rush update --purge
 
 # Generate Prisma Client
-RUN cd projects/database pnpm prisma generate
+RUN cd projects/database npx prisma generate
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000

@@ -1,1 +1,1 @@
-export { PrismaClient as GovskyPrismaClient } from "@prisma/client";
+export { PrismaClient as GovskyPrismaClient } from "./generated/client";

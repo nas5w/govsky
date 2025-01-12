@@ -6,6 +6,9 @@
 
 generator client {
   provider = "prisma-client-js"
+  // Generating to a custom directory rather than node_modules
+  // because of a conflict with how rush symlinks deps
+  output   = "../generated/client"
 }
 
 datasource db {
