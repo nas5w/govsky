@@ -337,6 +337,10 @@
     {
       "packageName": "@govsky/database",
       "projectFolder": "projects/database"
+    },
+    {
+      "packageName": "@govsky/api",
+      "projectFolder": "projects/api"
     }
   ]
 }

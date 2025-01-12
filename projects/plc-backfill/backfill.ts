@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
 import { PlcAgent, PlcRecord } from "./plcAgent";
+import { GovskyPrismaClient } from "@govsky/database";
 
-const prisma = new PrismaClient();
+const prisma = new GovskyPrismaClient();
 
 const LATEST_RECORD_SETTING_KEY = "latestRecord";
 

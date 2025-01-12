@@ -8,11 +8,11 @@ importers:
 
   .: {}
 
-  ../../projects/database:
+  ../../projects/api:
     dependencies:
-      '@prisma/client':
-        specifier: ^6.2.1
-        version: 6.2.1(prisma@6.2.1)
+      '@govsky/database':
+        specifier: workspace:*
+        version: link:../database
       '@types/node':
         specifier: ^22.10.5
         version: 22.10.5
@@ -25,7 +25,25 @@ importers:
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
+
+  ../../projects/database:
+    dependencies:
+      '@prisma/client':
+        specifier: ^6.2.1
+        version: 6.2.1(prisma@6.2.1)
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@22.10.5)(typescript@5.7.3)
+      tsx:
+        specifier: ^4.19.2
+        version: 4.19.2
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
     devDependencies:
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.10.5
       prisma:
         specifier: ^6.2.1
         version: 6.2.1
@@ -395,7 +413,6 @@ packages:
     resolution: {integrity: sha512-F8Q+SeGimwOo86fiovQh8qiXfFEh2/ocYv7tU5pJ3EXMSSxk1Joj5wefpFK2fHTf/N6HKGSxIDBT9f3gCxXPkQ==}
     dependencies:
       undici-types: 6.20.0
-    dev: false
 
   /acorn-walk@8.3.4:
     resolution: {integrity: sha512-ueEepnujpqee2o5aIYnvHU6C0A42MNdsIDeqy5BydrkuC5R1ZuUFnm27EeFJGoEHJQgn3uleRvmTXaJgfXbt4g==}
@@ -563,7 +580,6 @@ packages:
 
   /undici-types@6.20.0:
     resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
-    dev: false
 
   /v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
