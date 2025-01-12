@@ -1,11 +1,11 @@
 import { AtpAgent } from "@atproto/api";
-import { PrismaClient } from "@prisma/client";
+import { GovskyPrismaClient } from "@govsky/database";
 
 const VALIDATION_INTERVAL = 5 * 60_000;
 
 const agent = new AtpAgent({ service: "https://public.api.bsky.app" });
 
-const prisma = new PrismaClient();
+const prisma = new GovskyPrismaClient();
 
 export function validate(extensions: string[]) {
   runValidation(extensions);

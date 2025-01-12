@@ -3,5 +3,6 @@
 # This script starts both the govsky API and backfill services because
 # they currently run on the same box.
 
-cd projects/api && rushx start &
-cd projects/plc-backfill && rushx start
+cd projects/database && npx prisma generate
+cd ../api && rushx start &
+cd ../plc-backfill && rushx start
