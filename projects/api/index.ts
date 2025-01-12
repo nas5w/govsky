@@ -57,7 +57,7 @@ async function setupServer() {
     reply.send({ handles });
   });
 
-  fastify.listen({ port }, (err) => {
+  fastify.listen({ port, host: process.env.HOST || "localhost" }, (err) => {
     if (err) throw err;
     console.log(`Fastify server listening at http://localhost:${port}`);
   });
