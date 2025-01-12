@@ -332,7 +332,11 @@
   "projects": [
     {
       "packageName": "@govsky/plc-backfill",
-      "projectFolder": "plc-backfill"
+      "projectFolder": "projects/plc-backfill"
+    },
+    {
+      "packageName": "@govsky/database",
+      "projectFolder": "projects/database"
     }
   ]
 }
