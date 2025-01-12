@@ -1,20 +1,12 @@
-import http from "http";
+import * as http from "http";
 const port = process.env.PORT || 3000;
-import { backfill } from "./backfill";
-import { PrismaClient } from "@prisma/client";
 import { Cache } from "./cache";
-import { validate } from "./validate";
+import { GovskyPrismaClient } from "@govsky/database";
 
 const allowedExtensions = [".gov", ".gov.uk", ".gov.br"];
 
-// Start process that keeps PLC directory up-to-date
-backfill();
-
-// Start process to validate relevant extensions
-validate(allowedExtensions);
-
 // Simple HTTP server for API
-const prisma = new PrismaClient();
+const prisma = new GovskyPrismaClient();
 
 const cache = new Cache();
 

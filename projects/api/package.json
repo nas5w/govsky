@@ -1,0 +1,14 @@
+{
+  "name": "@govsky/api",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "@govsky/database": "workspace:*",
+    "@types/node": "^22.10.5",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
