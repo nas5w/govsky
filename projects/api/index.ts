@@ -59,7 +59,7 @@ async function setupServer() {
 
   fastify.listen({ port }, (err) => {
     if (err) throw err;
-    console.log(`Server listening at http://localhost:${port}`);
+    console.log(`Fastify server listening at http://localhost:${port}`);
   });
 }
 
