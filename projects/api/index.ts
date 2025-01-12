@@ -1,29 +1,36 @@
-import * as http from "http";
-const port = process.env.PORT || 3000;
+import Fastify, { RequestGenericInterface } from "fastify";
 import { Cache } from "./cache";
 import { GovskyPrismaClient } from "@govsky/database";
+import { allowedExtensions } from "@govsky/config";
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
-const allowedExtensions = [".gov", ".gov.uk", ".gov.br"];
-
-// Simple HTTP server for API
 const prisma = new GovskyPrismaClient();
-
 const cache = new Cache();
 
-http
-  .createServer(async function (req, res) {
+interface RequestGeneric extends RequestGenericInterface {
+  Params: {
+    domain: string;
+  };
+}
+
+async function setupServer() {
+  const fastify = Fastify();
+
+  await fastify.register(import("@fastify/rate-limit"), {
+    max: 30,
+    timeWindow: "1 minute",
+  });
+
+  fastify.get<RequestGeneric>("/api/:domain", async (request, reply) => {
+    console.log(request.params.domain, allowedExtensions);
     const extension = allowedExtensions.find((ext) => {
-      return new RegExp(`^/api/${ext}\$`, "i").test(req.url || "");
+      return (request.params?.domain || "").toLowerCase() === ext.toLowerCase();
     });
 
     if (!extension) {
-      res.writeHead(400, { "Content-Type": "application.json" });
-      res.write(
-        JSON.stringify({
-          error: `Extension must be one of: ${allowedExtensions.join(", ")}`,
-        })
-      );
-      res.end();
+      reply.code(404).send({
+        error: `Extension must be one of: ${allowedExtensions.join(", ")}`,
+      });
       return;
     }
 
@@ -47,10 +54,13 @@ http
       cache.set(extension, handles, 5 * 60_000);
     }
 
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.write(JSON.stringify({ handles }));
-    res.end();
-  })
-  .listen(port, () => {
-    console.log(`App running on port ${port}`);
+    reply.send({ handles });
   });
+
+  fastify.listen({ port }, (err) => {
+    if (err) throw err;
+    console.log(`Server listening at http://localhost:${port}`);
+  });
+}
+
+setupServer();

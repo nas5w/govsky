@@ -6,9 +6,12 @@
   },
   "dependencies": {
     "@govsky/database": "workspace:*",
+    "@govsky/config": "workspace:*",
     "@types/node": "^22.10.5",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "fastify": "~5.2.1",
+    "@fastify/rate-limit": "~10.2.2"
   }
 }
