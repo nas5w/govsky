@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
 # Adjust NODE_VERSION as desired
-ARG NODE_VERSION=22.14.0
+ARG NODE_VERSION=20.14.0
 FROM node:${NODE_VERSION}-slim AS base
 
 LABEL fly_launch_runtime="Node.js/Prisma"
@@ -29,7 +29,8 @@ RUN npm install -g @microsoft/rush@5.148.0
 COPY . .
 
 # Install deps
-RUN rush update
+RUN rm -rf common/temp
+RUN rush update --purge
 
 # Generate Prisma Client
 RUN cd projects/database npx prisma generate
