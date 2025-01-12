@@ -26,6 +26,8 @@ importers:
         specifier: ^5.7.3
         version: 5.7.3
 
+  ../../projects/config: {}
+
   ../../projects/database:
     dependencies:
       '@prisma/client':
@@ -53,6 +55,9 @@ importers:
       '@atproto/api':
         specifier: ^0.13.26
         version: 0.13.26
+      '@govsky/config':
+        specifier: workspace:*
+        version: link:../config
       '@govsky/database':
         specifier: workspace:*
         version: link:../database

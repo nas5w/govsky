@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@govsky/database": "workspace:*",
+    "@govsky/config": "workspace:*",
     "@atproto/api": "^0.13.26",
     "@types/node": "^22.10.5",
     "ts-node": "^10.9.2",

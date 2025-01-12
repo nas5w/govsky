@@ -1,9 +1,6 @@
-const port = process.env.PORT || 3000;
 import { backfill } from "./backfill";
 import { validate } from "./validate";
-import { GovskyPrismaClient } from "@govsky/database";
-
-const allowedExtensions = [".gov", ".gov.uk", ".gov.br"];
+import { allowedExtensions } from "@govsky/config";
 
 // Start process that keeps PLC directory up-to-date
 backfill();

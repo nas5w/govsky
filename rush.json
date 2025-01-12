@@ -341,6 +341,10 @@
     {
       "packageName": "@govsky/api",
       "projectFolder": "projects/api"
+    },
+    {
+      "packageName": "@govsky/config",
+      "projectFolder": "projects/config"
     }
   ]
 }
