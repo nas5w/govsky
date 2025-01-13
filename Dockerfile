@@ -30,6 +30,7 @@ COPY . .
 # Install deps
 RUN rm -rf common/temp
 RUN rush update --purge
+RUN rush build
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
