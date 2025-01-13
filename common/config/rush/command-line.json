@@ -12,6 +12,11 @@
    */
   "commands": [
     {
+      "commandKind": "bulk",
+      "name": "build",
+      "summary": "Build projects"
+    },
+    {
       "commandKind": "global",
       "name": "start-services",
       "summary": "Start govsky services",

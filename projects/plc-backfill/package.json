@@ -2,7 +2,8 @@
   "name": "@govsky/plc-backfill",
   "version": "0.0.1",
   "scripts": {
-    "start": "ts-node index.ts"
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@govsky/database": "workspace:*",
