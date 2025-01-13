@@ -2,8 +2,10 @@
   "name": "@govsky/database",
   "version": "0.0.1",
   "scripts": {
+    "build": "tsc",
     "start": ""
   },
+  "main": "dist/index.js",
   "dependencies": {
     "@prisma/client": "^6.2.1",
     "ts-node": "^10.9.2",
