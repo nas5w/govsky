@@ -21,12 +21,6 @@
       "name": "start-services",
       "summary": "Start govsky services",
       "shellCommand": "bash scripts/start_govsky_service.sh"
-    },
-    {
-      "commandKind": "global",
-      "name": "migrate-deploy",
-      "summary": "Migrate DB for deployed env",
-      "shellCommand": "cd projects/database && npx prisma migrate deploy"
     }
     // {
     //   /**

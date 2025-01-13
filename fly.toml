@@ -9,7 +9,7 @@ primary_region = 'iad'
 [build]
 
 [deploy]
-  release_command = 'rush migrate-deploy'
+  release_command = 'cd projects/database && ./node_modules/.bin/prisma migrate deploy'
 
 [http_service]
   internal_port = 3000
