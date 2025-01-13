@@ -9,7 +9,7 @@ primary_region = 'iad'
 [build]
 
 [deploy]
-  release_command = 'cd projects/database && ./node_modules/.bin/prisma migrate deploy'
+  release_command = 'migrate.sh'
 
 [http_service]
   internal_port = 3000
