@@ -9,7 +9,7 @@ primary_region = 'iad'
 [build]
 
 [deploy]
-  release_command = 'migrate.sh'
+  release_command = 'npx prisma migrate deploy --schema ./projects/database/prisma/schema.prisma'
 
 [http_service]
   internal_port = 3000
