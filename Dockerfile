@@ -13,8 +13,7 @@ WORKDIR /app
 ENV NODE_ENV="production"
 
 
-# Note this is not at all efficient, need to actually optimize this step to 
-# not include all the build artifacts
+# Throwaway build step
 FROM base AS build
 
 # Install packages needed to build node modules
@@ -31,7 +30,13 @@ COPY . .
 RUN rm -rf common/temp
 RUN rush update --purge
 RUN rush build
+RUN rush deploy
+
+# Final stage
+FROM base
+# Copy from build
+COPY --from=build /app/common/deploy .
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "rush", "start-services" ]
+CMD [ "bash", "start_govsky_services.sh" ]

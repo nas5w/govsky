@@ -3,5 +3,5 @@
 # This script starts both the govsky API and backfill services because
 # they currently run on the same box.
 
-cd ./projects/api && rushx start &
-cd ./projects/plc-backfill && rushx start
+cd ./projects/api && node dist/index.js &
+cd ./projects/plc-backfill && node dist/index.js
