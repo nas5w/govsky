@@ -30,7 +30,7 @@ COPY . .
 RUN rm -rf common/temp
 RUN rush update --purge
 RUN rush build
-RUN rush deploy
+RUN rush deploy --overwrite
 
 # Final stage
 FROM base
@@ -45,4 +45,4 @@ COPY --from=build /app/common/deploy .
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "bash", "start_govsky_services.sh" ]
+CMD [ "bash", "start_govsky_service.sh" ]
