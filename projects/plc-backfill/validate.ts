@@ -38,7 +38,7 @@ async function runValidation(extensions: string[]) {
     return acc;
   }, {} as Record<string, { handle: string; id: number }>);
 
-  const actors: { did: string; handle: string }[] = [];
+  const actors: { did: string; handle: string; displayName?: string }[] = [];
   while (toValidate.length) {
     const lookup = await agent.getProfiles({
       actors: toValidate.splice(0, 25).map((el) => el.did),
@@ -63,6 +63,7 @@ async function runValidation(extensions: string[]) {
       },
       data: {
         is_valid: valid,
+        displayName: actor.displayName || null,
         validated_at: new Date(),
       },
     });
