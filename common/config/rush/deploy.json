@@ -70,7 +70,7 @@
     {
       "projectName": "@govsky/api",
       // Only included to be able to run the backfill service on the same box as the API.
-      "additionalProjectsToInclude": ["@govsky/plc-backfill"]
+      "additionalProjectsToInclude": ["@govsky/plc-backfill", "@govsky/bots"]
     }
 
     // {

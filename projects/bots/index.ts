@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import cron from "node-cron";
 import { config } from "@govsky/config";
 import { BotConfig } from "./types";
 import { GovskyBot } from "./govsky-bot";
@@ -21,8 +22,13 @@ const bots: BotConfig[] = [
     },
     lists: [
       {
+        description: "All gov",
+        uri: "at://did:plc:pe365hgnkisv4rhrcow7m5ue/app.bsky.graph.list/3lf3xwfybxl2j",
+        addHandleToListTest: () => true,
+      },
+      {
         description: "No congress",
-        uri: "at://did:plc:dryyr4rmq3izcymy2jijiz6c/app.bsky.graph.list/3lfoboo7j3q2g",
+        uri: "at://did:plc:pe365hgnkisv4rhrcow7m5ue/app.bsky.graph.list/3lf6am7kaxb2n",
         addHandleToListTest: (handle) =>
           !handle.endsWith(".house.gov") && !handle.endsWith(".senate.gov"),
       },
@@ -52,5 +58,6 @@ async function runBots() {
   }
 }
 
-// Execute this on cron eventually
-runBots();
+cron.schedule("*/5 * * * *", () => {
+  runBots();
+});

@@ -10,6 +10,8 @@
     "@govsky/config": "workspace:*",
     "@govsky/api": "workspace:*",
     "@atproto/api": "~0.13.27",
-    "dotenv": "~16.4.7"
+    "dotenv": "~16.4.7",
+    "node-cron": "~3.0.3",
+    "@types/node-cron": "~3.0.11"
   }
 }
