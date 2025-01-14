@@ -10,7 +10,7 @@ swap_size_mb = 512
 [build]
 
 [deploy]
-  release_command = 'npx prisma migrate deploy --schema ./projects/database/prisma/schema.prisma'
+  release_command = './projects/database/node_modules/.bin/prisma migrate deploy --schema ./projects/database/prisma/schema.prisma'
 
 [http_service]
   internal_port = 3000
