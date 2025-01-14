@@ -345,6 +345,10 @@
     {
       "packageName": "@govsky/config",
       "projectFolder": "projects/config"
+    },
+    {
+      "packageName": "@govsky/bots",
+      "projectFolder": "projects/bots"
     }
   ]
 }

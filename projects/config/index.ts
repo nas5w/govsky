@@ -13,3 +13,5 @@ export const config = {
 export const allowedExtensions = Object.values(config)
   .map((country) => country.domains)
   .flat();
+
+export type GovskyConfig = typeof config;

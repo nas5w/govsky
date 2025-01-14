@@ -35,6 +35,21 @@ importers:
         specifier: ^5.7.3
         version: 5.7.3
 
+  ../../projects/bots:
+    dependencies:
+      '@atproto/api':
+        specifier: ~0.13.27
+        version: 0.13.27
+      '@govsky/config':
+        specifier: workspace:*
+        version: link:../config
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.10.5
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
+
   ../../projects/config:
     dependencies:
       typescript:
@@ -90,6 +105,19 @@ packages:
 
   /@atproto/api@0.13.26:
     resolution: {integrity: sha512-W3zsgCdEuyvP2Qj3Np858kwjv5/pAd/pX3Z5HtLKIYt8uQottAZkuH+2dV+WRovgxHekyCyFJK07NuD4TQ9WMQ==}
+    dependencies:
+      '@atproto/common-web': 0.3.2
+      '@atproto/lexicon': 0.4.5
+      '@atproto/syntax': 0.3.1
+      '@atproto/xrpc': 0.6.6
+      await-lock: 2.2.2
+      multiformats: 9.9.0
+      tlds: 1.255.0
+      zod: 3.24.1
+    dev: false
+
+  /@atproto/api@0.13.27:
+    resolution: {integrity: sha512-IaZezARJSoFBxFvutGa+2hT0NiA+db6NpKkla2bRyv/SPinYViuqD5kaaPzc732yeE1uwUKQc4wwwlctYamFBQ==}
     dependencies:
       '@atproto/common-web': 0.3.2
       '@atproto/lexicon': 0.4.5
