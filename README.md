@@ -12,6 +12,16 @@ Govsky provides [Bluesky](https://bsky.app/) bots and lists that track official 
 - [Govsky US .GOV account list](https://bsky.app/profile/govsky.bsky.social/lists/3lf3xwfybxl2j)
 - [Govsky web app](https://govsky.pages.dev/)
 
+## Bring your own code
+
+If you're just interested in consuming the Govsky API from your own code, that's great! You can hit the following endpoint to get a list of validated Bluesky government handles:
+
+```
+https://govsky.fly.dev/api/[domain-here]
+```
+
+For example, if you want to see all `.gov` domains, you can use the following URL: https://govsky.fly.dev/api/.gov. If the government domain you want is not available, please [open an issue in this repo](https://github.com/nas5w/govsky/issues) and we can get it added.
+
 ## What's included in this repo
 
 This codebase is a [Rush.js](https://rushjs.io/) monorepo with the following [node.js](https://nodejs.org/)-based projects:
@@ -23,8 +33,11 @@ This codebase is a [Rush.js](https://rushjs.io/) monorepo with the following [no
 | @govsky/config       | Shared config files used in other projects in the monorepo.                                                                                                   | [projects/config](./projects/config/)             |
 | @govsky/database     | Shared database specification for tracking plc.directory changes.                                                                                             | [projects/database](./projects//database/)        |
 | @govsky/plc-backfill | Code used to keep up-to-date with plc.directory changes and periodically validate relevant entries.                                                           | [projects/plc-backfill](./projects/plc-backfill/) |
+| @govsky/webapp       | Code for the Govsky web app UI.                                                                                                                               | WIP                                               |
 
-## Running locally
+Each project directory has its own README file where you can learn more about the individual project.
+
+## Running Govsky locally
 
 All of the projects in the monorepo require node and rush to be installed. All of the projects except `@govsky/bots` require you to have a database up-and-running.
 
