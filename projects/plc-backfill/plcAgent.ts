@@ -20,25 +20,23 @@ export class PlcAgent {
   private requestDelayMs = 500;
   private backoffDelay = 120_000;
   private limit = 1000;
-  private enableExport = false;
+  private isRunning = false;
   private maxHandleLength = 263;
   private currentTimeLag = 5 * 60_000;
 
   constructor(private latestRecord: Date) {}
 
-  stopExport() {
-    this.enableExport = false;
-  }
-
   async startExport(callback: DataCallback) {
-    this.enableExport = true;
+    if (this.isRunning) {
+      console.log("Backfill already in progress");
+      return;
+    }
+
+    this.isRunning = true;
 
     if (Date.now() - this.latestRecord.getTime() < this.currentTimeLag) {
-      console.log("Backfill up-to-date. Waiting...");
-      await delay(this.backoffDelay);
-      if (this.enableExport) {
-        this.startExport(callback);
-      }
+      console.log("Backfill up-to-date. Stopping.");
+      this.isRunning = false;
       return;
     }
 
@@ -50,9 +48,7 @@ export class PlcAgent {
 
     await delay(data ? this.requestDelayMs : this.backoffDelay);
 
-    if (this.enableExport) {
-      this.startExport(callback);
-    }
+    this.startExport(callback);
   }
 
   private async getData(): Promise<CallbackPayload | null> {

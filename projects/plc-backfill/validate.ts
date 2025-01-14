@@ -1,20 +1,17 @@
 import { AtpAgent } from "@atproto/api";
 import { GovskyPrismaClient } from "@govsky/database";
 
-const VALIDATION_INTERVAL = 5 * 60_000;
-
 const agent = new AtpAgent({ service: "https://public.api.bsky.app" });
 
 const prisma = new GovskyPrismaClient();
 
 export function validate(extensions: string[]) {
   runValidation(extensions);
-  setInterval(() => {
-    runValidation(extensions);
-  }, VALIDATION_INTERVAL);
 }
 
 async function runValidation(extensions: string[]) {
+  console.log("Running handle validations...");
+
   const toValidate: { id: number; handle: string; did: string }[] = [];
 
   for (const extension of extensions) {
