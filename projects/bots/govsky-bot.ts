@@ -6,20 +6,33 @@ import { ListItemView } from "@atproto/api/dist/client/types/app/bsky/graph/defs
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-type AddOrRemove = { toAdd: ApiUser[]; toRemove: ApiUser[] };
-
 export class GovskyBot {
   private readonly atpAgent = new AtpAgent({ service: "https://bsky.social" });
   private botDid?: string;
 
-  constructor(private readonly config: BotConfig) {}
+  constructor(
+    private readonly config: BotConfig,
+    private readonly readOnly: boolean
+  ) {}
+
+  private rateLimitDelay() {
+    return delay(500);
+  }
+
+  private logReadOnly(action: string) {
+    console.log(`Read-only mode, skipping action: ${action}`);
+  }
 
   private async addUserToList(userDid: string, listUri: string) {
     if (!this.botDid) {
       throw new Error("Bot must be logged in");
     }
 
-    return this.atpAgent.com.atproto.repo.createRecord({
+    if (this.readOnly) {
+      return this.logReadOnly("add user to list");
+    }
+
+    await this.atpAgent.com.atproto.repo.createRecord({
       collection: "app.bsky.graph.listitem",
       record: {
         $type: "app.bsky.graph.listitem",
@@ -29,41 +42,114 @@ export class GovskyBot {
       },
       repo: this.botDid,
     });
+
+    await this.rateLimitDelay();
   }
 
-  async addOrRemoveFromLists({ toAdd, toRemove }: AddOrRemove) {
-    if (!this.config.lists) return;
+  async addOrRemoveFromLists(users: ApiUser[]) {
+    if (!this.config.lists?.length) {
+      console.log("No lists configured");
+      return;
+    }
+    const userSet = new Set(users.map((u) => u.did));
+
     for (const list of this.config.lists) {
+      console.log(`List: ${list.description}:`);
       const listMembers = await this.getListMembers(list.uri);
-      const listMemberSet = new Set(listMembers.map((u) => u.subject.did));
-      const toAddToList = toAdd.filter(
-        (u) => list.addHandleToListTest(u.handle) && !listMemberSet.has(u.did)
-      );
-      const toRemoveFromList = toRemove.filter((u) => listMemberSet.has(u.did));
-      for (const user of toAddToList) {
-        console.log(`Adding user ${user.handle} to list ${list.description}`);
-        await this.addUserToList(user.did, list.uri);
-        await delay(500);
+      const listMemberSet = new Set(listMembers.map((m) => m.subject.did));
+      let addCount = 0;
+      let removeCount = 0;
+
+      // Remove users as appropriate
+      for (const member of listMembers) {
+        if (
+          !userSet.has(member.subject.did) ||
+          !list.addHandleToListTest(member.subject.handle)
+        ) {
+          console.log(
+            `Removing user ${member.subject.handle} from list ${list.description}`
+          );
+          await this.removeUserFromList(member);
+          removeCount++;
+        }
       }
+      // Add users as appropriate
+      for (const user of users) {
+        if (
+          list.addHandleToListTest(user.handle) &&
+          !listMemberSet.has(user.did)
+        ) {
+          console.log(`Adding user ${user.handle} to list ${list.description}`);
+          await this.addUserToList(user.did, list.uri);
+          addCount++;
+        }
+      }
+
+      console.log(`${addCount} added, ${removeCount} removed`);
     }
   }
 
-  async followOrUnfollow({ toAdd, toRemove }: AddOrRemove) {
+  async removeUserFromList(listItem: ListItemView) {
+    if (!this.botDid) {
+      throw new Error("But must be logged in");
+    }
+
+    if (this.readOnly) {
+      return this.logReadOnly("remove user from list");
+    }
+
+    const [rkey] = listItem.uri.split("/").reverse();
+
+    await this.atpAgent.com.atproto.repo.deleteRecord({
+      rkey,
+      collection: "app.bsky.graph.listitem",
+      repo: this.botDid,
+    });
+
+    await this.rateLimitDelay();
+  }
+
+  async followOrUnfollow(users: ApiUser[]) {
+    const { toAdd, toRemove } = await this.getUsersToAddOrRemove(users);
+    let followedCount = 0;
+    let unfollowedCount = 0;
     // Follow and announce
     for (const user of toAdd) {
       console.log(`Following ${user.handle}`);
-      await this.atpAgent.follow(user.did);
-      const rt = new RichText({ text: this.config.welcomeMessage(user) });
-      await rt.detectFacets(this.atpAgent);
-      await this.atpAgent.post({ text: rt.text, facets: rt.facets });
-      await delay(500);
+      await this.followAndAnnounce(user);
+      followedCount++;
     }
 
     // Unfollow
     for (const user of toRemove) {
-      await this.atpAgent.deleteFollow(user.did);
-      await delay(500);
+      console.log(`Unfollowing ${user.handle}`);
+      await this.unfollow(user);
+      unfollowedCount++;
     }
+
+    console.log(`${followedCount} followed, ${unfollowedCount} unfollowed`);
+  }
+
+  async unfollow(user: ApiUser) {
+    if (this.readOnly) {
+      return this.logReadOnly("unfollow user");
+    }
+
+    await this.atpAgent.deleteFollow(user.did);
+
+    await this.rateLimitDelay();
+  }
+
+  async followAndAnnounce(user: ApiUser) {
+    if (this.readOnly) {
+      return this.logReadOnly("follow and announce user");
+    }
+
+    await this.atpAgent.follow(user.did);
+    const rt = new RichText({ text: this.config.welcomeMessage(user) });
+    await rt.detectFacets(this.atpAgent);
+    await this.atpAgent.post({ text: rt.text, facets: rt.facets });
+    await this.rateLimitDelay();
   }
 
   async getUsersToAddOrRemove(users: ApiUser[]) {
