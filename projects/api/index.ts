@@ -23,7 +23,8 @@ async function setupServer() {
   });
 
   fastify.get<RequestGeneric>("/api/:domain", async (request, reply) => {
-    console.log(request.params.domain, allowedExtensions);
+    reply.header("Access-Control-Allow-Origin", "*");
+
     const extension = allowedExtensions.find((ext) => {
       return (request.params?.domain || "").toLowerCase() === ext.toLowerCase();
     });
