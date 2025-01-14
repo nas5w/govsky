@@ -21,6 +21,7 @@ model User {
   id           Int       @id @default(autoincrement())
   did          String
   handle       String
+  displayName  String?
   handlePart1  String
   handlePart2  String
   handlePart3  String

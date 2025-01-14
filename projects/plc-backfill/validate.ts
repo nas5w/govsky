@@ -44,9 +44,10 @@ async function runValidation(extensions: string[]) {
       actors: toValidate.splice(0, 25).map((el) => el.did),
     });
     actors.push(
-      ...lookup.data.profiles.map(({ did, handle }) => ({
+      ...lookup.data.profiles.map(({ did, handle, displayName }) => ({
         did,
         handle,
+        displayName,
       }))
     );
   }
