@@ -4,5 +4,4 @@
 # they currently run on the same box.
 
 cd ./projects/api && node dist/index.js &
-cd ./projects/plc-backfill && node dist/index.js &
-cd ./projects/bots && node dist/index.js
+cd ./projects/plc-backfill && node dist/index.js
