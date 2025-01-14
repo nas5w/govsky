@@ -1,41 +1,14 @@
 import dotenv from "dotenv";
-import { config } from "@govsky/config";
 import { BotConfig } from "./types";
 import { GovskyBot } from "./govsky-bot";
-import { ApiUser } from "@govsky/api/types";
 import { getUserForAllDomains } from "./helpers";
+import { govskyUsBot } from "./configs";
 
 const BOT_INTERVAL = 5 * 60_000;
 
 dotenv.config();
 
-const bots: BotConfig[] = [
-  {
-    name: "Govsky US",
-    handle: process.env.GOVSKY_US_HANDLE || "",
-    password: process.env.GOVSKY_US_PW || "",
-    domains: config.us.domains,
-    welcomeMessage: (user: ApiUser) => {
-      const name = user.displayName
-        ? `${user.displayName} (@${user.handle})`
-        : user.handle;
-      return `${name} has joined Bluesky! #govsky`;
-    },
-    lists: [
-      {
-        description: "All gov",
-        uri: "at://did:plc:pe365hgnkisv4rhrcow7m5ue/app.bsky.graph.list/3lf3xwfybxl2j",
-        addHandleToListTest: () => true,
-      },
-      {
-        description: "No congress",
-        uri: "at://did:plc:pe365hgnkisv4rhrcow7m5ue/app.bsky.graph.list/3lf6am7kaxb2n",
-        addHandleToListTest: (handle) =>
-          !handle.endsWith(".house.gov") && !handle.endsWith(".senate.gov"),
-      },
-    ],
-  },
-];
+const bots: BotConfig[] = [govskyUsBot];
 
 async function runBots() {
   // Read-only mode, mostly for testing
