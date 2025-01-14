@@ -34,17 +34,29 @@ async function addHandles(records: PlcRecord[], latestRecord: Date) {
   });
 }
 
+let backfillIsRunning = false;
+
 export async function backfill() {
+  if (backfillIsRunning) {
+    console.log("Backfill already running");
+    return;
+  }
+
   const latestRecord = await prisma.setting.findFirst({
     where: { key: LATEST_RECORD_SETTING_KEY },
   });
 
   const plcAgent = new PlcAgent(new Date(latestRecord?.value || 0));
 
-  plcAgent.startExport((data) => {
-    console.log(data.latestRecord, data.records.length);
-    addHandles(data.records, data.latestRecord);
-  });
+  plcAgent.startExport(
+    (data) => {
+      console.log(data.latestRecord, data.records.length);
+      addHandles(data.records, data.latestRecord);
+    },
+    () => {
+      backfillIsRunning = false;
+    }
+  );
 }
 
 // Disconnect from DB on shutdown
