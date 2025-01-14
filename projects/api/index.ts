@@ -39,7 +39,9 @@ async function setupServer() {
       .split(".")
       .reverse();
 
-    let handles: string[] | undefined = cache.get(extension);
+    let handles:
+      | { handle: string; displayName: string | null; did: string }[]
+      | undefined = cache.get(extension);
 
     if (!handles) {
       // Cache miss, query database
@@ -49,7 +51,11 @@ async function setupServer() {
       const data = await prisma.user.findMany({
         where: { ...where, is_valid: true },
       });
-      handles = data.map((el) => el.handle);
+      handles = data.map(({ handle, displayName, did }) => ({
+        handle,
+        displayName,
+        did,
+      }));
       // Five minute cache
       cache.set(extension, handles, 5 * 60_000);
     }
