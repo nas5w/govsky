@@ -1,3 +1,4 @@
+import { ApiUser } from "@govsky/api/types";
 import { GovskyConfig } from "@govsky/config";
 
 export type BotConfig = {
@@ -5,7 +6,8 @@ export type BotConfig = {
   handle: string;
   password: string;
   domains: GovskyConfig[keyof GovskyConfig]["domains"];
-  lists: {
+  welcomeMessage: (user: ApiUser) => string;
+  lists?: {
     description: string;
     uri: string;
     addHandleToListTest: (handle: string) => boolean;

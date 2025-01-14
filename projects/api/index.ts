@@ -2,6 +2,7 @@ import Fastify, { RequestGenericInterface } from "fastify";
 import { Cache } from "./cache";
 import { GovskyPrismaClient } from "@govsky/database";
 import { allowedExtensions } from "@govsky/config";
+import { ApiUser } from "./types";
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 const prisma = new GovskyPrismaClient();
@@ -39,28 +40,26 @@ async function setupServer() {
       .split(".")
       .reverse();
 
-    let handles:
-      | { handle: string; displayName: string | null; did: string }[]
-      | undefined = cache.get(extension);
+    let data: ApiUser[] | undefined = cache.get(extension);
 
-    if (!handles) {
+    if (!data) {
       // Cache miss, query database
       const where: Record<string, string> = { handlePart1 };
       if (handlePart2) where.handlePart2 = handlePart2;
       if (handlePart3) where.handlePart3 = handlePart3;
-      const data = await prisma.user.findMany({
+      const users = await prisma.user.findMany({
         where: { ...where, is_valid: true },
       });
-      handles = data.map(({ handle, displayName, did }) => ({
+      data = users.map(({ handle, displayName, did }) => ({
         handle,
         displayName,
         did,
       }));
       // Five minute cache
-      cache.set(extension, handles, 5 * 60_000);
+      cache.set(extension, data, 5 * 60_000);
     }
 
-    reply.send({ handles });
+    reply.send({ data });
   });
 
   fastify.listen({ port, host: process.env.HOST || "localhost" }, (err) => {

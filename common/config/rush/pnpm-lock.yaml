@@ -40,12 +40,18 @@ importers:
       '@atproto/api':
         specifier: ~0.13.27
         version: 0.13.27
+      '@govsky/api':
+        specifier: workspace:*
+        version: link:../api
       '@govsky/config':
         specifier: workspace:*
         version: link:../config
       '@types/node':
         specifier: ^22.10.5
         version: 22.10.5
+      dotenv:
+        specifier: ~16.4.7
+        version: 16.4.7
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
@@ -577,6 +583,11 @@ packages:
   /diff@4.0.2:
     resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
     engines: {node: '>=0.3.1'}
+    dev: false
+
+  /dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
+    engines: {node: '>=12'}
     dev: false
 
   /esbuild@0.23.1:

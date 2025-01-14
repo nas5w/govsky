@@ -1,6 +1,11 @@
+import dotenv from "dotenv";
 import { config } from "@govsky/config";
 import { BotConfig } from "./types";
 import { GovskyBot } from "./govsky-bot";
+import { ApiUser } from "@govsky/api/types";
+import { getUserForAllDomains } from "./helpers";
+
+dotenv.config();
 
 const bots: BotConfig[] = [
   {
@@ -8,7 +13,20 @@ const bots: BotConfig[] = [
     handle: process.env.GOVSKY_US_HANDLE || "",
     password: process.env.GOVSKY_US_PW || "",
     domains: config.us.domains,
-    lists: [],
+    welcomeMessage: (user: ApiUser) => {
+      const name = user.displayName
+        ? `${user.displayName} (@${user.handle})`
+        : user.handle;
+      return `${name} has joined Bluesky! #govsky`;
+    },
+    lists: [
+      {
+        description: "No congress",
+        uri: "at://did:plc:dryyr4rmq3izcymy2jijiz6c/app.bsky.graph.list/3lfoboo7j3q2g",
+        addHandleToListTest: (handle) =>
+          !handle.endsWith(".house.gov") && !handle.endsWith(".senate.gov"),
+      },
+    ],
   },
 ];
 
@@ -18,8 +36,14 @@ async function runBots() {
     const bot = new GovskyBot(botConfig);
     console.log("Logging in...");
     await bot.login();
-    console.log("Getting own following...");
-    const ownFollowing = await bot.getOwnFollowing();
+    console.log("Get relevant users...");
+    const users = await getUserForAllDomains(botConfig.domains);
+    console.log("Getting users to add or remove...");
+    const addOrRemove = await bot.getUsersToAddOrRemove(users);
+    console.log("Following and/or unfollowing users...");
+    // await bot.followOrUnfollow(addOrRemove);
+    console.log("Adding and/or removing users from lists...");
+    await bot.addOrRemoveFromLists(addOrRemove);
   }
 }
 

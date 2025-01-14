@@ -2,12 +2,14 @@
   "name": "@govsky/bots",
   "version": "0.0.1",
   "scripts": {
-    "build": ""
+    "build": "tsc"
   },
   "dependencies": {
     "typescript": "^5.7.3",
     "@types/node": "^22.10.5",
     "@govsky/config": "workspace:*",
-    "@atproto/api": "~0.13.27"
+    "@govsky/api": "workspace:*",
+    "@atproto/api": "~0.13.27",
+    "dotenv": "~16.4.7"
   }
 }
