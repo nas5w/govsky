@@ -1,10 +1,11 @@
 import dotenv from "dotenv";
-import cron from "node-cron";
 import { config } from "@govsky/config";
 import { BotConfig } from "./types";
 import { GovskyBot } from "./govsky-bot";
 import { ApiUser } from "@govsky/api/types";
 import { getUserForAllDomains } from "./helpers";
+
+const BOT_INTERVAL = 5 * 60_000;
 
 dotenv.config();
 
@@ -58,6 +59,8 @@ async function runBots() {
   }
 }
 
-cron.schedule("*/5 * * * *", () => {
+setInterval(() => {
   runBots();
-});
+}, BOT_INTERVAL);
+
+runBots();
