@@ -7,13 +7,19 @@ import { ListItemView } from "@atproto/api/dist/client/types/app/bsky/graph/defs
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export class GovskyBot {
+  private static bots = new Map<string, GovskyBot>();
   private readonly atpAgent = new AtpAgent({ service: "https://bsky.social" });
   private botDid?: string;
 
   constructor(
     private readonly config: BotConfig,
     private readonly readOnly: boolean
-  ) {}
+  ) {
+    if (GovskyBot.bots.has(config.handle)) {
+      return GovskyBot.bots.get(config.handle) as GovskyBot;
+    }
+    GovskyBot.bots.set(config.handle, this);
+  }
 
   private rateLimitDelay() {
     return delay(500);
@@ -204,6 +210,15 @@ export class GovskyBot {
   }
 
   async login() {
+    if (this.botDid) {
+      // Probably logged in. Let's make sure.
+      const me = await this.atpAgent.getProfile();
+      if (me.data.did === this.botDid) {
+        console.log("Already logged in, skipping auth");
+        return;
+      }
+    }
+
     const me = await this.atpAgent.login({
       identifier: this.config.handle,
       password: this.config.password,
