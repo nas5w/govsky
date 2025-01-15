@@ -1,105 +1,14 @@
-import TreeView, { flattenTree } from "react-accessible-treeview";
+import TreeView from "react-accessible-treeview";
 import "./App.css";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as gsc from "@govsky/config";
 import { GovskyConfig } from "@govsky/config";
+import { AllowedDomains, DomainHandles } from "./types";
+import { ApiUser } from "@govsky/api/types";
+import { generateTree } from "./utils/generateTree";
 
 const { config } = gsc;
-
-type AllowedDomains = GovskyConfig[keyof GovskyConfig]["domains"];
-
-type DomainHandles = {
-  domain: string;
-  data: ApiUser[];
-};
-
-type ApiUser = {
-  handle: string;
-  did: string;
-  displayName: string | null;
-};
-
-// Assemble tree
-type TreeNode = {
-  name: string;
-  children: TreeNode[];
-  metadata?: { handle?: string; displayName: string | null };
-};
-
-function generateTree(domainHandles: DomainHandles[], domains: AllowedDomains) {
-  const domainSet = new Set<string>(domains);
-
-  const topLevel: TreeNode = { name: "", children: [] };
-
-  function getParent(handle: string) {
-    const handleParts = handle.split(".");
-    handleParts.shift();
-    return handleParts.join(".");
-  }
-
-  for (const domainHandle of domainHandles) {
-    const handleMap = domainHandle.data.reduce((acc, el) => {
-      // Make sure parent node exists if it doesn't already
-
-      acc[el.handle] = {
-        name: el.handle,
-        children: [],
-        metadata: { handle: el.handle, displayName: el.displayName },
-      };
-
-      const parent = getParent(el.handle);
-
-      recursivelyAddParents(acc, parent, el.handle);
-
-      return acc;
-    }, {} as Record<string, TreeNode>);
-
-    function recursivelyAddParents(
-      map: typeof handleMap,
-      parent: string,
-      child: string
-    ) {
-      if (!map[parent]) {
-        map[parent] = {
-          name: parent,
-          children: [],
-        };
-        if (!domainSet.has("." + parent)) {
-          recursivelyAddParents(map, getParent(parent), parent);
-        }
-      }
-      map[parent].children.push(map[child]);
-    }
-
-    // If a node has a handle and children _or_ is top-level, add separate child
-    Object.values(handleMap).forEach((node) => {
-      if (
-        node.metadata?.handle &&
-        (node.children.length ||
-          node.metadata.handle.split(".").length ===
-            domainHandle.domain.split(".").length)
-      ) {
-        node.children.push({
-          name: " " + node.metadata.handle,
-          children: [],
-          metadata: {
-            handle: node.metadata.handle,
-            displayName: node.metadata.displayName,
-          },
-        });
-      }
-      node.children.sort((a, b) => (a.name > b.name ? 1 : -1));
-    });
-
-    const domainPart = domainHandle.domain.slice(1);
-    if (handleMap[domainPart]) {
-      topLevel.children.push(...handleMap[domainPart].children);
-    }
-  }
-
-  return flattenTree(topLevel);
-}
 
 function App() {
   const { country } = useParams<"country">();
