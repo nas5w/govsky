@@ -1,7 +1,6 @@
 {
   "name": "@govsky/plc-backfill",
   "version": "0.0.1",
-  "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
