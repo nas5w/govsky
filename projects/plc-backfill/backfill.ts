@@ -1,4 +1,4 @@
-import { PlcAgent, PlcRecord } from "./plcAgent";
+import { PlcAgent, PlcRecord } from "./plcAgent.js";
 import { GovskyPrismaClient } from "@govsky/database";
 
 const prisma = new GovskyPrismaClient();

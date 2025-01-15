@@ -1,6 +1,6 @@
-import { ApiUser } from "@govsky/api/types";
+import { ApiUser } from "@govsky/api/types.js";
 import { config } from "@govsky/config";
-import { BotConfig } from "./types";
+import { BotConfig } from "./types.js";
 
 export const govskyUsBot: BotConfig = {
   name: "Govsky US",
