@@ -1,4 +1,4 @@
-import { ApiUser } from "@govsky/api/types.js";
+import { ApiUser } from "@govsky/api/types";
 import { GovskyConfig } from "@govsky/config";
 
 export type BotConfig = {

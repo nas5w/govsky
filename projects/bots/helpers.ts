@@ -1,5 +1,5 @@
-import { ApiUser } from "@govsky/api/types.js";
-import { BotConfig } from "./types.js";
+import { ApiUser } from "@govsky/api/types";
+import { BotConfig } from "./types";
 
 export async function getUserForAllDomains(domains: BotConfig["domains"]) {
   const requests = domains.map(

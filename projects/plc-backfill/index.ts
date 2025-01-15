@@ -1,5 +1,5 @@
-import { backfill } from "./backfill.js";
-import { validate } from "./validate.js";
+import { backfill } from "./backfill";
+import { validate } from "./validate";
 import { allowedExtensions } from "@govsky/config";
 
 const BACKFILL_INTERVAL = 5 * 60_000;

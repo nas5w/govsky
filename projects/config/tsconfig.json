@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "NodeNext",
+    "module": "CommonJS",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "outDir": "dist",
-    "allowSyntheticDefaultImports": true
+    "outDir": "dist"
   }
 }

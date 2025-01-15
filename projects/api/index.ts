@@ -1,8 +1,8 @@
 import Fastify, { RequestGenericInterface } from "fastify";
-import { Cache } from "./cache.js";
+import { Cache } from "./cache";
 import { GovskyPrismaClient } from "@govsky/database";
 import { allowedExtensions } from "@govsky/config";
-import { ApiUser } from "./types.js";
+import { ApiUser } from "./types";
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 const prisma = new GovskyPrismaClient();

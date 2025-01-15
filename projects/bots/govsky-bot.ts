@@ -1,8 +1,8 @@
 import { AtpAgent, RichText } from "@atproto/api";
-import { BotConfig } from "./types.js";
-import { ProfileView } from "@atproto/api/dist/client/types/app/bsky/actor/defs.js";
-import { ApiUser } from "@govsky/api/types.js";
-import { ListItemView } from "@atproto/api/dist/client/types/app/bsky/graph/defs.js";
+import { BotConfig } from "./types";
+import { ProfileView } from "@atproto/api/dist/client/types/app/bsky/actor/defs";
+import { ApiUser } from "@govsky/api/types";
+import { ListItemView } from "@atproto/api/dist/client/types/app/bsky/graph/defs";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 

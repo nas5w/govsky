@@ -1,11 +1,15 @@
 import TreeView, { flattenTree } from "react-accessible-treeview";
 import "./App.css";
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
-import * as govskyConfig from "@govsky/config";
-import { GovskyConfig } from "@govsky/config";
+import { useNavigate, useParams } from "react-router-dom";
+import { config, GovskyConfig } from "@govsky/config";
 
-const { config } = govskyConfig;
+type AllowedDomains = GovskyConfig[keyof GovskyConfig]["domains"];
+
+type DomainHandles = {
+  domain: string;
+  data: ApiUser[];
+};
 
 type ApiUser = {
   handle: string;
@@ -20,82 +24,91 @@ type TreeNode = {
   metadata?: { handle?: string; displayName: string | null };
 };
 
-function generateTree(handles: ApiUser[]) {
+function generateTree(domainHandles: DomainHandles[], domains: AllowedDomains) {
+  const domainSet = new Set<string>(domains);
+
+  const topLevel: TreeNode = { name: "", children: [] };
+
   function getParent(handle: string) {
     const handleParts = handle.split(".");
     handleParts.shift();
     return handleParts.join(".");
   }
 
-  const handleMap = handles.reduce((acc, el) => {
-    // Make sure parent node exists if it doesn't already
+  for (const domainHandle of domainHandles) {
+    const handleMap = domainHandle.data.reduce((acc, el) => {
+      // Make sure parent node exists if it doesn't already
 
-    acc[el.handle] = {
-      name: el.handle,
-      children: [],
-      metadata: { handle: el.handle, displayName: el.displayName },
-    };
-
-    const parent = getParent(el.handle);
-
-    recursivelyAddParents(acc, parent, el.handle);
-
-    return acc;
-  }, {} as Record<string, TreeNode>);
-
-  function recursivelyAddParents(
-    map: typeof handleMap,
-    parent: string,
-    child: string
-  ) {
-    if (!map[parent]) {
-      map[parent] = {
-        name: parent,
+      acc[el.handle] = {
+        name: el.handle,
         children: [],
+        metadata: { handle: el.handle, displayName: el.displayName },
       };
-      if (parent !== "gov") {
-        recursivelyAddParents(map, getParent(parent), parent);
-      }
-    }
-    map[parent].children.push(map[child]);
-  }
 
-  // If a node has a handle and children _or_ is top-level, add separate child
-  Object.values(handleMap).forEach((node) => {
-    if (
-      node.metadata?.handle &&
-      (node.children.length || node.metadata.handle.split(".").length === 2)
+      const parent = getParent(el.handle);
+
+      recursivelyAddParents(acc, parent, el.handle);
+
+      return acc;
+    }, {} as Record<string, TreeNode>);
+
+    function recursivelyAddParents(
+      map: typeof handleMap,
+      parent: string,
+      child: string
     ) {
-      node.children.push({
-        name: " " + node.metadata.handle,
-        children: [],
-        metadata: {
-          handle: node.metadata.handle,
-          displayName: node.metadata.displayName,
-        },
-      });
+      if (!map[parent]) {
+        map[parent] = {
+          name: parent,
+          children: [],
+        };
+        if (!domainSet.has("." + parent)) {
+          recursivelyAddParents(map, getParent(parent), parent);
+        }
+      }
+      map[parent].children.push(map[child]);
     }
-    node.children.sort((a, b) => (a.name > b.name ? 1 : -1));
-  });
 
-  if (!handleMap.gov) {
-    return [];
+    // If a node has a handle and children _or_ is top-level, add separate child
+    Object.values(handleMap).forEach((node) => {
+      if (
+        node.metadata?.handle &&
+        (node.children.length ||
+          node.metadata.handle.split(".").length ===
+            domainHandle.domain.split(".").length)
+      ) {
+        node.children.push({
+          name: " " + node.metadata.handle,
+          children: [],
+          metadata: {
+            handle: node.metadata.handle,
+            displayName: node.metadata.displayName,
+          },
+        });
+      }
+      node.children.sort((a, b) => (a.name > b.name ? 1 : -1));
+    });
+
+    const domainPart = domainHandle.domain.slice(1);
+    if (handleMap[domainPart]) {
+      topLevel.children.push(...handleMap[domainPart].children);
+    }
   }
 
-  return flattenTree(handleMap.gov);
+  return flattenTree(topLevel);
 }
 
 function App() {
   const { country } = useParams<"country">();
-  const [allHandles, setAllHandles] = useState<ApiUser[]>();
-  const [, setDomains] =
-    useState<GovskyConfig[keyof GovskyConfig]["domains"]>();
+  const [allHandles, setAllHandles] = useState<DomainHandles[]>();
+  const [domains, setDomains] = useState<AllowedDomains>();
   const [term, setTerm] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function load() {
       if (!country || !(country in config)) {
-        setAllHandles([]);
+        navigate("/us");
         return;
       }
 
@@ -108,7 +121,7 @@ function App() {
           domains.map(async (domain) => {
             const res = await fetch(`https://govsky.fly.dev/api/${domain}`);
             const { data } = await res.json();
-            return data as ApiUser[];
+            return { domain, data: data as ApiUser[] };
           })
         )
       ).flat();
@@ -116,18 +129,22 @@ function App() {
       setAllHandles(results);
     }
     load();
-  }, [country]);
+  }, [country, navigate]);
 
   const data = useMemo(() => {
-    if (!allHandles) return undefined;
-    const filteredHandles = allHandles.filter(
-      (el) =>
-        (el.displayName || "").toLowerCase().includes(term.toLowerCase()) ||
-        el.handle.toLowerCase().includes(term.toLowerCase())
-    );
+    if (!allHandles || !domains) return undefined;
 
-    return generateTree(filteredHandles);
-  }, [term, allHandles]);
+    const filteredHandles = [...allHandles];
+    for (const key in filteredHandles) {
+      filteredHandles[key].data = filteredHandles[key].data.filter(
+        (el) =>
+          (el.displayName || "").toLowerCase().includes(term.toLowerCase()) ||
+          el.handle.toLowerCase().includes(term.toLowerCase())
+      );
+    }
+
+    return generateTree(filteredHandles, domains);
+  }, [term, allHandles, domains]);
 
   return (
     <main>

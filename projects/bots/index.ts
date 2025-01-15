@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
-import { BotConfig } from "./types.js";
-import { GovskyBot } from "./govsky-bot.js";
-import { getUserForAllDomains } from "./helpers.js";
-import { govskyUsBot } from "./configs.js";
+import { BotConfig } from "./types";
+import { GovskyBot } from "./govsky-bot";
+import { getUserForAllDomains } from "./helpers";
+import { govskyUsBot } from "./configs";
 
 const BOT_INTERVAL = 5 * 60_000;
 
