@@ -17,20 +17,24 @@ async function runBots() {
   const readOnly = process.env.READ_ONLY === "true";
 
   for (const botConfig of bots) {
-    console.log(`Running bot: ${botConfig.name} (${botConfig.handle})`);
-    const bot = new GovskyBot(botConfig, readOnly);
+    try {
+      console.log(`Running bot: ${botConfig.name} (${botConfig.handle})`);
+      const bot = new GovskyBot(botConfig, readOnly);
 
-    console.log("Logging in...");
-    await bot.login();
+      console.log("Logging in...");
+      await bot.login();
 
-    console.log("Get relevant users...");
-    const users = await getUserForAllDomains(botConfig.domains);
+      console.log("Get relevant users...");
+      const users = await getUserForAllDomains(botConfig.domains);
 
-    console.log("Following and/or unfollowing users...");
-    await bot.followOrUnfollow(users);
+      console.log("Following and/or unfollowing users...");
+      await bot.followOrUnfollow(users);
 
-    console.log("Adding and/or removing users from lists...");
-    await bot.addOrRemoveFromLists(users);
+      console.log("Adding and/or removing users from lists...");
+      await bot.addOrRemoveFromLists(users);
+    } catch (e) {
+      console.error("Error running bot!", e);
+    }
   }
 }
 
