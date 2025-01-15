@@ -30,7 +30,7 @@ COPY . .
 RUN rm -rf common/temp
 RUN rush update --purge
 RUN rush build
-RUN rush deploy --overwrite
+RUN rush deploy -p @govsky/api --overwrite
 
 # Final stage
 FROM base
