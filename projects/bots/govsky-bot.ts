@@ -210,14 +210,12 @@ export class GovskyBot {
   }
 
   async login() {
-    if (this.botDid) {
-      // Probably logged in. Let's make sure.
-      const me = await this.atpAgent.getProfile();
-      if (me.data.did === this.botDid) {
-        console.log("Already logged in, skipping auth");
-        return;
-      }
-    }
+    // Probably logged in. Let's make sure.
+    try {
+      this.atpAgent.assertDid;
+      console.log("Already logged in, skipping auth");
+      return;
+    } catch {}
 
     const me = await this.atpAgent.login({
       identifier: this.config.handle,
