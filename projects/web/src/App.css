@@ -1,0 +1,105 @@
+body {
+  font-family: sans-serif;
+  padding: 20px 0;
+}
+
+.description {
+  padding: 20px 20px 0;
+}
+
+header {
+  padding: 20px;
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 3px solid #eee;
+
+  span {
+    align-self: center;
+    font-size: 1rem;
+    background-color: #444;
+    color: #fff;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+}
+
+.basic.tree {
+  list-style: none;
+  margin: 0;
+  padding: 20px;
+}
+.basic .tree-node,
+.basic .tree-node-group {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.basic .tree-node {
+  padding: 1px 0;
+  display: flex;
+}
+
+.basic .tree-branch-wrapper,
+.basic .tree-node__leaf {
+  outline: none;
+}
+
+.basic .tree-node--focused {
+  outline-color: rgb(77, 144, 254);
+  outline-style: auto;
+  outline-width: 2px;
+}
+
+.basic .tree-node__branch {
+  display: block;
+}
+
+.basic .tree-node {
+  cursor: pointer;
+}
+
+.tree-node__handle {
+  cursor: auto;
+}
+
+.indicator {
+  display: inline-flex;
+  width: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.indicator::empty {
+  width: 0;
+  margin-inline-start: 1rem;
+}
+
+.display-name {
+  display: inline-block;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  padding: 3px 6px;
+  background-color: #add8e6;
+  margin-inline-start: 4px;
+}
+
+main {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 10px;
+
+  label {
+    font-size: 0.9rem;
+  }
+}
+
+.no-results {
+  padding: 20px;
+}

@@ -33,7 +33,7 @@ This codebase is a [Rush.js](https://rushjs.io/) monorepo with the following [no
 | @govsky/config       | Shared config files used in other projects in the monorepo.                                                                                                   | [projects/config](./projects/config/)             |
 | @govsky/database     | Shared database specification for tracking plc.directory changes.                                                                                             | [projects/database](./projects//database/)        |
 | @govsky/plc-backfill | Code used to keep up-to-date with plc.directory changes and periodically validate relevant entries.                                                           | [projects/plc-backfill](./projects/plc-backfill/) |
-| @govsky/webapp       | Code for the Govsky web app UI.                                                                                                                               | WIP                                               |
+| @govsky/web          | Code for the Govsky web app UI.                                                                                                                               | [projects/web](./projects/web/)                   |
 
 Each project directory has its own README file where you can learn more about the individual project.
 

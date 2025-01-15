@@ -1,11 +1,14 @@
 export const config = {
   us: {
+    name: "United States",
     domains: [".gov", ".mil"],
   },
   uk: {
+    name: "United Kingdom",
     domains: [".gov.uk"],
   },
   br: {
+    name: "Brazil",
     domains: [".gov.br"],
   },
 } as const;
