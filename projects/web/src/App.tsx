@@ -2,7 +2,10 @@ import TreeView, { flattenTree } from "react-accessible-treeview";
 import "./App.css";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { config, GovskyConfig } from "@govsky/config";
+import * as gsc from "@govsky/config";
+import { GovskyConfig } from "@govsky/config";
+
+const { config } = gsc;
 
 type AllowedDomains = GovskyConfig[keyof GovskyConfig]["domains"];
 
@@ -146,14 +149,18 @@ function App() {
     return generateTree(filteredHandles, domains);
   }, [term, allHandles, domains]);
 
+  const countryName = country
+    ? config[country as keyof GovskyConfig].name
+    : undefined;
+
   return (
     <main>
       <header>
         <h1>GovSky</h1>
-        <span>United States</span>
+        {countryName && <span>{countryName}</span>}
       </header>
       <p className="description">
-        Discover official U.S. government accounts on Bluesky.
+        Discover official government accounts on Bluesky.
         <br />
         Not seeing an account? Contact me{" "}
         <a href="https://bsky.app/profile/govsky.bsky.social" target="_blank">
