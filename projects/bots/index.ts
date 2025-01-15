@@ -8,8 +8,6 @@ const BOT_INTERVAL = 5 * 60_000;
 
 dotenv.config();
 
-console.log(process.env);
-
 const bots: BotConfig[] = [govskyUsBot];
 
 async function runBots() {
