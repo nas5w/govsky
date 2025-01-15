@@ -2,7 +2,8 @@
   "name": "@govsky/database",
   "version": "0.0.1",
   "scripts": {
-    "build": "npx prisma generate && tsc"
+    "build": "npx prisma generate && tsc",
+    "test": ""
   },
   "main": "dist/index.js",
   "dependencies": {

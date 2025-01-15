@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as gsc from "@govsky/config";
 import { GovskyConfig } from "@govsky/config";
-import { AllowedDomains, DomainHandles } from "./types";
 import { ApiUser } from "@govsky/api/types";
+import { AllowedDomains, DomainHandles } from "./types";
 import { generateTree } from "./utils/generateTree";
 
 const { config } = gsc;

@@ -14,7 +14,14 @@
     {
       "commandKind": "bulk",
       "name": "build",
-      "summary": "Build projects"
+      "summary": "Build projects",
+      "enableParallelism": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "test",
+      "summary": "Run all tests",
+      "enableParallelism": true
     },
     {
       "commandKind": "global",
