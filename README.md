@@ -2,7 +2,7 @@
 
 Welcome to the Govsky project!
 
-Here you will find the code that powers Govsky. The aim of making this code available is two-part: (1) transparency about hwo Govsky works and (2) providing working code that others can use to implement part or all of the Govsky offerings.
+Here you will find the code that powers Govsky. The aim of making this code available is two-part: (1) transparency about how Govsky works and (2) providing working code that others can use to implement part or all of the Govsky offerings.
 
 ## What is Govsky?
 
