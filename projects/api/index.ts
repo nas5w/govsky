@@ -24,6 +24,7 @@ async function setupServer() {
 
   fastify.get<RequestGeneric>("/api/:domain", async (request, reply) => {
     reply.header("Access-Control-Allow-Origin", "*");
+    reply.header("Cache-Control", "public, max-age=60");
 
     const extension = allowedExtensions.find((ext) => {
       return (request.params?.domain || "").toLowerCase() === ext.toLowerCase();
