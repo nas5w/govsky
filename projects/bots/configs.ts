@@ -10,7 +10,7 @@ export const govskyUsBot: BotConfig = {
   welcomeMessage: (user: ApiUser) => {
     const name = user.displayName
       ? `${user.displayName} (@${user.handle})`
-      : user.handle;
+      : `@${user.handle}`;
     return `${name} has joined Bluesky! #govsky`;
   },
   lists: [
