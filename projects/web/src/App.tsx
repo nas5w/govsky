@@ -62,6 +62,14 @@ function App() {
     ? config[country as keyof GovskyConfig].name
     : undefined;
 
+  useEffect(() => {
+    if (countryName) {
+      document.title = `${countryName} | Govsky`;
+    } else {
+      document.title = "Govsky";
+    }
+  }, [countryName]);
+
   return (
     <main>
       <header>
