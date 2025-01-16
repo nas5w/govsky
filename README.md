@@ -12,6 +12,10 @@ Govsky provides [Bluesky](https://bsky.app/) bots and lists that track official 
 - [Govsky US .GOV account list](https://bsky.app/profile/govsky.bsky.social/lists/3lf3xwfybxl2j)
 - [Govsky web app](https://govsky.pages.dev/)
 
+## Contributing to the Govsky accounts
+
+If you're here to suggest new countries or domains, thank you! The best way to get started is to [open an issue in this repo](https://github.com/nas5w/govsky/issues) and we can discuss adding it.
+
 ## Bring your own code
 
 If you're just interested in consuming the Govsky API from your own code, that's great! You can hit the following endpoint to get a list of validated Bluesky government handles:
@@ -104,10 +108,16 @@ Note that this command is just an alias for running `node dist/index.js`.
 
 ## Deploying
 
-Rush has a handy deploy command:
+Rush has a handy deploy command. You can deploy the backend services using the following command:
 
 ```
-rush deploy
+rush deploy -p @govsky/api
+```
+
+Or the web app using this command:
+
+```
+rush deploy -p @govsky/web
 ```
 
 This bundles up all the projects as specified in `common/config/rush/deploy.json` and puts them in the `common/deploy` directory. This directory can then be placed on a server and the individual projects can be run.
