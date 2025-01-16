@@ -8,6 +8,7 @@ export default defineConfig({
     include: ["@govsky/config"],
   },
   build: {
+    sourcemap: true,
     commonjsOptions: {
       include: [/@govsky\/config/, /node_modules/],
     },
