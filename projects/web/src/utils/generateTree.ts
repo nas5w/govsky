@@ -22,7 +22,14 @@ function recursivelyAddParents(
       recursivelyAddParents(map, getParent(parent), parent, domainSet);
     }
   }
-  map[parent].children.push(map[child]);
+
+  const relationshipExists = map[parent].children.find(
+    (el) => el.name === map[child].name
+  );
+
+  if (!relationshipExists) {
+    map[parent].children.push(map[child]);
+  }
 }
 
 export function generateTree(
@@ -35,10 +42,16 @@ export function generateTree(
 
   for (const domainHandle of domainHandles) {
     const handleMap = domainHandle.data.reduce((acc, el) => {
-      acc[el.handle] = {
-        name: el.handle,
-        children: [],
-        metadata: { handle: el.handle, displayName: el.displayName },
+      if (!acc[el.handle]) {
+        acc[el.handle] = {
+          name: el.handle,
+          children: [],
+        };
+      }
+
+      acc[el.handle].metadata = {
+        handle: el.handle,
+        displayName: el.displayName,
       };
 
       const parent = getParent(el.handle);
