@@ -80,8 +80,8 @@ function App() {
         Discover official government accounts on Bluesky.
         <br />
         Not seeing an account? Contact me{" "}
-        <a href="https://bsky.app/profile/govsky.bsky.social" target="_blank">
-          @govsky.bsky.social
+        <a href="https://bsky.app/profile/us.govsky.org" target="_blank">
+          @us.govsky.org
         </a>
         .
       </p>
