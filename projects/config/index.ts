@@ -9,7 +9,7 @@ export const config = {
   },
   uk: {
     name: "United Kingdom",
-    domains: [".gov.uk"],
+    domains: [".gov.uk", ".parliament.uk"],
   },
   us: {
     name: "United States",
