@@ -3,8 +3,40 @@ body {
   padding: 20px 0;
 }
 
+a {
+  color: #333;
+  &:hover {
+    color: #555;
+  }
+}
+
 .description {
   padding: 20px 20px 0;
+}
+
+.country-list {
+  padding: 20px 20px;
+  list-style: none;
+}
+
+.back-link {
+  margin-inline-start: 20px;
+}
+
+.gh-link-container {
+  align-self: center;
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.gh-link {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  img {
+    height: 1.4rem;
+  }
 }
 
 header {

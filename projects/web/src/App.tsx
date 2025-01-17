@@ -7,6 +7,7 @@ import { GovskyConfig } from "@govsky/config";
 import { ApiUser } from "@govsky/api/types";
 import { AllowedDomains, DomainHandles } from "./types";
 import { generateTree } from "./utils/generateTree";
+import { Header } from "./components/Header";
 
 const { config } = gsc;
 
@@ -72,10 +73,7 @@ function App() {
 
   return (
     <main>
-      <header>
-        <h1>GovSky</h1>
-        {countryName && <span>{countryName}</span>}
-      </header>
+      <Header countryName={countryName} />
       <p className="description">
         Discover official government accounts on Bluesky.
         <br />
