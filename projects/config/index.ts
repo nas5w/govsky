@@ -1,15 +1,19 @@
 export const config = {
-  us: {
-    name: "United States",
-    domains: [".gov", ".mil"],
+  br: {
+    name: "Brazil",
+    domains: [".gov.br"],
+  },
+  ca: {
+    name: "Canada",
+    domains: [".gc.ca", ".canada.ca"],
   },
   uk: {
     name: "United Kingdom",
     domains: [".gov.uk"],
   },
-  br: {
-    name: "Brazil",
-    domains: [".gov.br"],
+  us: {
+    name: "United States",
+    domains: [".gov", ".mil"],
   },
 } as const;
 

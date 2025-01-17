@@ -15,6 +15,7 @@ function App() {
   const { country } = useParams<"country">();
   const [allHandles, setAllHandles] = useState<DomainHandles[]>();
   const [domains, setDomains] = useState<AllowedDomains>();
+  const [error, setError] = useState(false);
   const [term, setTerm] = useState("");
   const navigate = useNavigate();
 
@@ -29,17 +30,20 @@ function App() {
 
       setDomains(domains);
 
-      const results = (
-        await Promise.all(
-          domains.map(async (domain) => {
-            const res = await fetch(`https://govsky.fly.dev/api/${domain}`);
-            const { data } = await res.json();
-            return { domain, data: data as ApiUser[] };
-          })
-        )
-      ).flat();
-
-      setAllHandles(results);
+      try {
+        const results = (
+          await Promise.all(
+            domains.map(async (domain) => {
+              const res = await fetch(`https://govsky.fly.dev/api/${domain}`);
+              const { data } = await res.json();
+              return { domain, data: (data || []) as ApiUser[] };
+            })
+          )
+        ).flat();
+        setAllHandles(results);
+      } catch {
+        setError(true);
+      }
     }
     load();
   }, [country, navigate]);
@@ -97,8 +101,12 @@ function App() {
       </div>
 
       {!data ? (
-        <p className="no-results">Loading...</p>
-      ) : !data.length ? (
+        <p className="no-results">
+          {error
+            ? "There was an error loading this page. Please try again. If the problem persists, report an issue on GitHub."
+            : "Loading..."}
+        </p>
+      ) : data.length <= 1 ? (
         <p className="no-results">No results.</p>
       ) : (
         <TreeView
