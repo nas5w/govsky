@@ -7,6 +7,10 @@ export const config = {
     name: "Canada",
     domains: [".gc.ca", ".canada.ca"],
   },
+  co: {
+    name: "Colombia",
+    domains: [".gov.co"],
+  },
   de: {
     name: "Germany",
     domains: [".bund.de", ".bundesregierung.de", ".bundestag.de"],
