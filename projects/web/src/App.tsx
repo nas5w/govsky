@@ -7,7 +7,11 @@ import { GovskyConfig } from "@govsky/config";
 import { ApiUser } from "@govsky/api/types";
 import { AllowedDomains, DomainHandles } from "./types";
 import { generateTree } from "./utils/generateTree";
-import { Header } from "./components/Header";
+import { ChevronLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { Input } from "./components/ui/input";
+import { ChevronRight, ExternalLink } from "lucide-react";
 
 const { config } = gsc;
 
@@ -76,84 +80,136 @@ function App() {
   }, [countryName]);
 
   return (
-    <main>
-      <Header countryName={countryName} />
-      <p className="description">
-        Discover official government accounts on Bluesky.
-        <br />
-        Not seeing an account? Contact me{" "}
-        <a href="https://bsky.app/profile/us.govsky.org" target="_blank">
-          @us.govsky.org
-        </a>
-        .
-      </p>
+    <div className="min-h-screen bg-background">
+      <div className="container px-4 py-8 max-w-3xl mx-auto">
+        <div className="space-y-6">
+          <div className="flex flex-col gap-6">
+            <div className="space-y-6">
+              <Button variant="ghost" size="sm" asChild className="pl-0">
+                <Link to="/">
+                  <ChevronLeft className="mr-2 h-4 w-4" />
+                  Back to countries
+                </Link>
+              </Button>
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight">
+                {countryName}
+              </h1>
+              <p className="mt-2 text-muted-foreground">
+                Discover official government accounts on Bluesky
+              </p>
+            </div>
+          </div>
 
-      <div className="search">
-        <label htmlFor="govsky-search">Search</label>
-        <input
-          id="govsky-search"
-          value={term}
-          onChange={(e) => {
-            setTerm(e.target.value);
-          }}
-          placeholder="City of Boston"
-        ></input>
+          <div className="space-y-4">
+            <Input
+              id="govsky-search"
+              type="search"
+              placeholder="Search accounts..."
+              value={term}
+              onChange={(e) => {
+                setTerm(e.target.value);
+              }}
+              className="mb-4"
+            />
+
+            {!data ? (
+              <p className="no-results">
+                {error
+                  ? "There was an error loading this page. Please try again. If the problem persists, report an issue on GitHub."
+                  : "Loading..."}
+              </p>
+            ) : data.length <= 1 ? (
+              <p className="text-center text-muted-foreground">
+                No accounts found.
+              </p>
+            ) : (
+              <TreeView
+                key={term}
+                data={data}
+                expandedIds={term.trim() ? data.map(({ id }) => id) : undefined}
+                expandOnKeyboardSelect
+                aria-label="Bluesky US government accounts"
+                nodeRenderer={({
+                  element,
+                  getNodeProps,
+                  level,
+                  isExpanded,
+                }) => {
+                  const hasChildren = element.children.length > 0;
+                  const displayName = element.metadata?.displayName;
+                  const showDisplayName = !hasChildren && displayName;
+
+                  return (
+                    <div {...getNodeProps()}>
+                      <button
+                        className="w-full rounded-lg border bg-card text-card-foreground p-4 transition-colors hover:bg-accent/50 mt-2"
+                        style={{
+                          marginLeft: `${20 * (level - 1)}px`,
+                          cursor: hasChildren ? "pointer" : "default",
+                        }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            {hasChildren ? (
+                              <ChevronRight
+                                className={`h-4 w-4 transition-transform ${
+                                  isExpanded ? "rotate-90" : ""
+                                }`}
+                              />
+                            ) : null}
+
+                            <div className="text-left">
+                              {showDisplayName ? (
+                                <div className="font-medium truncate">
+                                  {displayName}
+                                </div>
+                              ) : null}
+                              <div
+                                className={`font-medium ${
+                                  showDisplayName
+                                    ? "text-muted-foreground truncate"
+                                    : ""
+                                }`}
+                              >
+                                @{element.name.trim()}
+                              </div>
+                            </div>
+                          </div>
+
+                          {hasChildren ? (
+                            <div className="text-sm text-muted-foreground">
+                              {element.children.length} accounts
+                            </div>
+                          ) : (
+                            <Button
+                              asChild
+                              variant="outline"
+                              size="sm"
+                              className="ml-4 text-blueSkyBrand"
+                            >
+                              <a
+                                href={`https://bsky.app/profile/${element.metadata?.handle}`}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                <ExternalLink className="h-4 w-4 mr-2" />
+                                View on Bluesky
+                              </a>
+                            </Button>
+                          )}
+                        </div>
+                      </button>
+                    </div>
+                  );
+                }}
+              />
+            )}
+          </div>
+        </div>
       </div>
-
-      {!data ? (
-        <p className="no-results">
-          {error
-            ? "There was an error loading this page. Please try again. If the problem persists, report an issue on GitHub."
-            : "Loading..."}
-        </p>
-      ) : data.length <= 1 ? (
-        <p className="no-results">No results.</p>
-      ) : (
-        <TreeView
-          key={term}
-          data={data}
-          expandedIds={term.trim() ? data.map(({ id }) => id) : undefined}
-          className="basic"
-          aria-label="Bluesky US government accounts"
-          nodeRenderer={({ element, getNodeProps, level, isExpanded }) => {
-            const nodeProps = getNodeProps();
-
-            if (!element.children.length) {
-              return (
-                <div {...nodeProps} style={{ paddingLeft: 20 * (level - 1) }}>
-                  <span className="indicator"></span>
-                  <a
-                    href={`https://bsky.app/profile/${element.metadata?.handle}`}
-                    target="_blank"
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.currentTarget.click();
-                      }
-                    }}
-                  >
-                    @{element.name.trim()}
-                  </a>
-                  {element.metadata?.displayName ? (
-                    <span className="display-name">
-                      {element.metadata.displayName}
-                    </span>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              );
-            }
-
-            return (
-              <div {...nodeProps} style={{ paddingLeft: 20 * (level - 1) }}>
-                <span className="indicator">{isExpanded ? "-" : "+"}</span>@
-                {element.name} ({element.children.length})
-              </div>
-            );
-          }}
-        />
-      )}
-    </main>
+    </div>
   );
 }
 

@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import "./App.css";
-import { Header } from "./components/Header";
 import * as gsc from "@govsky/config";
+import CountryList from "./components/country-list";
 
 const { config } = gsc;
 
@@ -11,22 +10,36 @@ const sortedConfig = Object.entries(config)
 
 export const Index = () => {
   return (
-    <main>
-      <Header />
-      <p className="description">
-        Welcome! Govsky is an effort to catalog government presence on Bluesky
-        by tracking when officially government domains sign up for the service.
-      </p>
-      <p className="description">
-        Find your country below to see which government entities are on Bluesky.
-      </p>
-      <ul className="country-list">
-        {sortedConfig.map(({ code, name }) => (
-          <li key={code}>
-            <Link to={`/${code}`}>{name}</Link>
-          </li>
-        ))}
-      </ul>
-    </main>
+    <div className="min-h-screen bg-background">
+      <main className="container px-4 py-12 max-w-3xl mx-auto">
+        <div className="space-y-6 text-center">
+          <h2 className="text-3xl font-bold tracking-tight">
+            Discover Government on{" "}
+            <span className="text-blueSkyBrand">Bluesky</span>
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            Welcome! Govsky is an effort to catalog government presence on
+            Bluesky by tracking when officially government domains sign up for
+            the service.
+          </p>
+        </div>
+
+        <div className="mt-12">
+          <CountryList countries={sortedConfig} />
+        </div>
+
+        <div className="mt-12 text-center">
+          <p className="text-sm text-muted-foreground">
+            Not seeing an account? Contact us at{" "}
+            <a
+              href="mailto:@us.govsky.org"
+              className="text-primary hover:underline"
+            >
+              @us.govsky.org
+            </a>
+          </p>
+        </div>
+      </main>
+    </div>
   );
 };

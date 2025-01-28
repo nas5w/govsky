@@ -1,137 +1,69 @@
-body {
-  font-family: sans-serif;
-  padding: 20px 0;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  color: #333;
-  &:hover {
-    color: #555;
+@layer base {
+  :root {
+    --blue-sky-brand: #208BFE;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
-.description {
-  padding: 20px 20px 0;
-}
-
-.country-list {
-  padding: 20px 20px;
-  list-style: none;
-}
-
-.back-link {
-  margin-inline-start: 20px;
-}
-
-.gh-link-container {
-  align-self: center;
-  flex-grow: 1;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.gh-link {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  img {
-    height: 1.4rem;
+@layer base {
+  * {
+    @apply border-border;
   }
-}
-
-header {
-  padding: 20px;
-  display: flex;
-  gap: 0.5rem;
-  border-bottom: 3px solid #eee;
-
-  span {
-    align-self: center;
-    font-size: 1rem;
-    background-color: #444;
-    color: #fff;
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 10px;
+  body {
+    @apply bg-background text-foreground;
   }
-}
-
-.basic.tree {
-  list-style: none;
-  margin: 0;
-  padding: 20px;
-}
-.basic .tree-node,
-.basic .tree-node-group {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.basic .tree-node {
-  padding: 1px 0;
-  display: flex;
-}
-
-.basic .tree-branch-wrapper,
-.basic .tree-node__leaf {
-  outline: none;
-}
-
-.basic .tree-node--focused {
-  outline-color: rgb(77, 144, 254);
-  outline-style: auto;
-  outline-width: 2px;
-}
-
-.basic .tree-node__branch {
-  display: block;
-}
-
-.basic .tree-node {
-  cursor: pointer;
-}
-
-.tree-node__handle {
-  cursor: auto;
-}
-
-.indicator {
-  display: inline-flex;
-  width: 1rem;
-  align-items: center;
-  justify-content: center;
-}
-
-.indicator::empty {
-  width: 0;
-  margin-inline-start: 1rem;
-}
-
-.display-name {
-  display: inline-block;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  padding: 3px 6px;
-  background-color: #add8e6;
-  margin-inline-start: 4px;
-}
-
-main {
-  max-width: 40rem;
-  margin: 0 auto;
-}
-
-.search {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 20px 10px;
-
-  label {
-    font-size: 0.9rem;
-  }
-}
-
-.no-results {
-  padding: 20px;
 }

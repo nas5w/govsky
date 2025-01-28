@@ -4,14 +4,19 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import App from "./App.tsx";
 import "./reset.css";
 import { Index } from "./Index.tsx";
+import { Header } from "./components/Header.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Router>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/:country" element={<App />} />
-      </Routes>
+      <Header />
+
+      <main>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/:country" element={<App />} />
+        </Routes>
+      </main>
     </Router>
   </StrictMode>
 );
