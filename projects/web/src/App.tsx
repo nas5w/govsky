@@ -147,16 +147,19 @@ function App() {
                   const displayName = element.metadata?.displayName;
                   const showDisplayName = !hasChildren && displayName;
 
+                  const marginLeft = `${20 * (level - 1)}px`;
+
                   return (
                     <div {...getNodeProps()}>
                       <button
                         className="w-full rounded-lg border bg-card text-card-foreground p-4 transition-colors hover:bg-accent/50 mt-2"
                         style={{
-                          marginLeft: `${20 * (level - 1)}px`,
+                          marginLeft,
+                          width: `calc(100% - ${marginLeft})`,
                           cursor: hasChildren ? "pointer" : "default",
                         }}
                       >
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between flex-wrap gap-4">
                           <div className="flex items-center gap-3">
                             {hasChildren ? (
                               <ChevronRight
@@ -194,7 +197,7 @@ function App() {
                               asChild
                               variant="outline"
                               size="sm"
-                              className="ml-4 text-blueSkyBrand"
+                              className="text-blueSkyBrand"
                               onKeyDown={(e) => {
                                 if (e.key === "Enter") {
                                   e.currentTarget.querySelector("a")?.click();
