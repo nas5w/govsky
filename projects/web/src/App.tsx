@@ -186,7 +186,8 @@ function App() {
 
                           {hasChildren ? (
                             <div className="text-sm text-muted-foreground">
-                              {element.children.length} accounts
+                              {element.children.length} account
+                              {element.children.length === 1 ? "" : "s"}
                             </div>
                           ) : (
                             <Button
@@ -194,6 +195,12 @@ function App() {
                               variant="outline"
                               size="sm"
                               className="ml-4 text-blueSkyBrand"
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.currentTarget.querySelector("a")?.click();
+                                  e.stopPropagation();
+                                }
+                              }}
                             >
                               <a
                                 href={`https://bsky.app/profile/${element.metadata?.handle}`}
