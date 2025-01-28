@@ -55,7 +55,10 @@ function App() {
   const data = useMemo(() => {
     if (!allHandles || !domains) return undefined;
 
-    const filteredHandles = [...allHandles];
+    const filteredHandles = allHandles.map((handle) => ({
+      ...handle,
+      data: [...handle.data],
+    }));
     for (const key in filteredHandles) {
       filteredHandles[key].data = filteredHandles[key].data.filter(
         (el) =>
@@ -77,6 +80,9 @@ function App() {
     } else {
       document.title = "Govsky";
     }
+    return () => {
+      document.title = "Govsky";
+    };
   }, [countryName]);
 
   return (
