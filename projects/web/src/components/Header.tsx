@@ -1,27 +1,23 @@
 import { Link } from "react-router-dom";
-import gh from "./github-mark.png";
+import { Button } from "./ui/button";
+import { Github } from "./icons/github";
 
-type Props = {
-  countryName?: string;
-};
-
-export const Header = ({ countryName }: Props) => {
+export const Header = () => {
   return (
-    <>
-      {countryName && (
-        <Link className="back-link" to="/">
-          &laquo; Back to country list
-        </Link>
-      )}
-      <header>
-        <h1>Govsky</h1>
-        {countryName && <span>{countryName}</span>}
-        <div className="gh-link-container">
-          <a className="gh-link" href="https://github.com/nas5w/govsky">
-            <img src={gh} alt="GitHub logo"></img> Github
-          </a>
+    <header className="border-b flex justify-center items-center">
+      <div className="container flex items-center justify-between h-16 px-4">
+        <div className="flex items-center space-x-4">
+          <h1 className="text-2xl font-bold">
+            <Link to={`/`}>Govsky</Link>
+          </h1>
         </div>
-      </header>
-    </>
+        <Button variant="ghost" size="icon" asChild>
+          <a href="https://github.com/nas5w/govsky">
+            <Github className="h-5 w-5" />
+            <span className="sr-only">GitHub</span>
+          </a>
+        </Button>
+      </div>
+    </header>
   );
 };
