@@ -54,20 +54,25 @@ export function generateTree(
         displayName: el.displayName,
       };
 
-      const parent = getParent(el.handle);
-
-      recursivelyAddParents(acc, parent, el.handle, domainSet);
+      const isTopLevel = domainSet.has(`.${el.handle}`);
+      if (!isTopLevel) {
+        const parent = getParent(el.handle);
+        recursivelyAddParents(acc, parent, el.handle, domainSet);
+      }
 
       return acc;
     }, {} as Record<string, TreeNode>);
 
     // If a node has a handle and children _or_ is top-level, add separate child
     Object.values(handleMap).forEach((node) => {
+      const isTopLevel =
+        !!node.metadata?.handle && domainSet.has(`.${node.metadata.handle}`);
       if (
         node.metadata?.handle &&
         (node.children.length ||
           node.metadata.handle.split(".").length ===
-            domainHandle.domain.split(".").length)
+            domainHandle.domain.split(".").length ||
+          isTopLevel)
       ) {
         node.children.push({
           name: " " + node.metadata.handle,

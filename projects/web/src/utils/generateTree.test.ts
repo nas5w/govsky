@@ -210,4 +210,42 @@ describe("generateTree", () => {
       },
     ]);
   });
+
+  test("generates single, top-level domain tree", () => {
+    expect(
+      generateTree(
+        [
+          {
+            domain: ".gov.je",
+            data: [
+              {
+                displayName: "Government of Jersey",
+                did: "did:plc:v2j2gtmmkgykrrfatiigrc36",
+                handle: "gov.je",
+              },
+            ],
+          },
+        ],
+        [".gov.je"]
+      )
+    ).toEqual([
+      {
+        children: [1],
+        id: 0,
+        metadata: undefined,
+        name: "",
+        parent: null,
+      },
+      {
+        id: 1,
+        name: " gov.je",
+        parent: 0,
+        metadata: {
+          displayName: "Government of Jersey",
+          handle: "gov.je",
+        },
+        children: [],
+      },
+    ]);
+  });
 });
