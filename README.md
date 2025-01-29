@@ -16,6 +16,17 @@ Govsky provides [Bluesky](https://bsky.app/) bots and lists that track official 
 
 If you're here to suggest new countries or domains, thank you! The best way to get started is to [open an issue in this repo](https://github.com/nas5w/govsky/issues) and we can discuss adding it.
 
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ## Bring your own code
 
 If you're just interested in consuming the Govsky API from your own code, that's great! You can hit the following endpoint to get a list of validated Bluesky government handles:
