@@ -8,9 +8,9 @@ Here you will find the code that powers Govsky. The aim of making this code avai
 
 Govsky provides [Bluesky](https://bsky.app/) bots and lists that track official government accounts on Bluesky. Additionally, Govsky provides a web app to search and visualize government presence.
 
-- [Govsky US Bluesky account](https://bsky.app/profile/govsky.bsky.social)
-- [Govsky US .GOV account list](https://bsky.app/profile/govsky.bsky.social/lists/3lf3xwfybxl2j)
-- [Govsky web app](https://govsky.pages.dev/)
+- [Govsky US Bluesky account](https://bsky.app/profile/us.govsky.org)
+- [Govsky US .gov account list](https://bsky.app/profile/govsky.bsky.social/lists/3lf3xwfybxl2j)
+- [Govsky web app](https://govsky.org)
 
 ## Contributing to the Govsky accounts
 
@@ -21,10 +21,10 @@ If you're here to suggest new countries or domains, thank you! The best way to g
 If you're just interested in consuming the Govsky API from your own code, that's great! You can hit the following endpoint to get a list of validated Bluesky government handles:
 
 ```
-https://govsky.fly.dev/api/[domain-here]
+https://api.govsky.org/api/[domain-here]
 ```
 
-For example, if you want to see all `.gov` domains, you can use the following URL: https://govsky.fly.dev/api/.gov. If the government domain you want is not available, please [open an issue in this repo](https://github.com/nas5w/govsky/issues) and we can get it added.
+For example, if you want to see all `.gov` domains, you can use the following URL: https://api.govsky.org/api/.gov. If the government domain you want is not available, please [open an issue in this repo](https://github.com/nas5w/govsky/issues) and we can get it added.
 
 ## What's included in this repo
 
