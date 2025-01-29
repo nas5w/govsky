@@ -21,6 +21,13 @@ If you're here to suggest new countries or domains, thank you! The best way to g
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://miguelcorrea.dev"><img src="https://avatars.githubusercontent.com/u/11799597?v=4?s=100" width="100px;" alt="Miguel Correa"/><br /><sub><b>Miguel Correa</b></sub></a><br /><a href="#code-miguelc1221" title="Code">💻</a> <a href="#infra-miguelc1221" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
