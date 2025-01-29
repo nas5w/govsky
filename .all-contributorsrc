@@ -1,4 +1,22 @@
 {
   "projectName": "govsky",
-  "projectOwner": "nas5w"
+  "projectOwner": "nas5w",
+  "files": [
+    "README.md"
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7,
+  "contributors": [
+    {
+      "login": "miguelc1221",
+      "name": "Miguel Correa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11799597?v=4",
+      "profile": "https://miguelcorrea.dev",
+      "contributions": [
+        "code",
+        "infra"
+      ]
+    }
+  ]
 }
