@@ -9,7 +9,7 @@ Here you will find the code that powers Govsky. The aim of making this code avai
 Govsky provides [Bluesky](https://bsky.app/) bots and lists that track official government accounts on Bluesky. Additionally, Govsky provides a web app to search and visualize government presence.
 
 - [Govsky US Bluesky account](https://bsky.app/profile/us.govsky.org)
-- [Govsky US .gov account list](https://bsky.app/profile/govsky.bsky.social/lists/3lf3xwfybxl2j)
+- [Govsky US .gov account list](https://bsky.app/profile/us.govsky.org/lists/3lf3xwfybxl2j)
 - [Govsky web app](https://govsky.org)
 
 ## Contributing to the Govsky accounts
