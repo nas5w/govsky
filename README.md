@@ -25,6 +25,7 @@ If you're here to suggest new countries or domains, thank you! The best way to g
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://miguelcorrea.dev"><img src="https://avatars.githubusercontent.com/u/11799597?v=4?s=100" width="100px;" alt="Miguel Correa"/><br /><sub><b>Miguel Correa</b></sub></a><br /><a href="#code-miguelc1221" title="Code">💻</a> <a href="#infra-miguelc1221" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://nick.scialli.me"><img src="https://avatars.githubusercontent.com/u/7538045?v=4?s=100" width="100px;" alt="Nick Scialli"/><br /><sub><b>Nick Scialli</b></sub></a><br /><a href="#code-nas5w" title="Code">💻</a> <a href="#infra-nas5w" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#bug-nas5w" title="Bug reports">🐛</a> <a href="#content-nas5w" title="Content">🖋</a> <a href="#data-nas5w" title="Data">🔣</a> <a href="#financial-nas5w" title="Financial">💵</a> <a href="#maintenance-nas5w" title="Maintenance">🚧</a> <a href="#platform-nas5w" title="Packaging/porting to new platform">📦</a></td>
     </tr>
   </tbody>
 </table>

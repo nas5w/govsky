@@ -17,6 +17,22 @@
         "code",
         "infra"
       ]
+    },
+    {
+      "login": "nas5w",
+      "name": "Nick Scialli",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7538045?v=4",
+      "profile": "https://nick.scialli.me",
+      "contributions": [
+        "code",
+        "infra",
+        "bug",
+        "content",
+        "data",
+        "financial",
+        "maintenance",
+        "platform"
+      ]
     }
   ]
 }
