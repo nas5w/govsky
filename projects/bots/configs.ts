@@ -47,3 +47,23 @@ export const govskyUkBot: BotConfig = {
     },
   ],
 };
+
+export const govskyEuBot: BotConfig = {
+  name: "Govsky EU",
+  handle: process.env.GOVSKY_EU_HANDLE || "",
+  password: process.env.GOVSKY_EU_PW || "",
+  domains: config.eu.domains,
+  welcomeMessage: (user: ApiUser) => {
+    const name = user.displayName
+      ? `${user.displayName} (@${user.handle})`
+      : `@${user.handle}`;
+    return `${name} is on Bluesky!`;
+  },
+  lists: [
+    {
+      description: "All Europa",
+      uri: "at://did:plc:6lgqu6gbqyexectg4dahovbx/app.bsky.graph.list/3lgtsjofumg2j",
+      addHandleToListTest: () => true,
+    },
+  ],
+};
