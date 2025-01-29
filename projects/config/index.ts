@@ -19,6 +19,10 @@ export const config = {
     name: "Germany",
     domains: [".bund.de", ".bundesregierung.de", ".bundestag.de"],
   },
+  fr: {
+    name: "France",
+    domains: [".gouv.fr", ".senat.fr", ".service-public.fr"],
+  },
   je: {
     name: "Island of Jersey",
     domains: [".gov.je"],
