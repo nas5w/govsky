@@ -16,7 +16,9 @@ Govsky provides [Bluesky](https://bsky.app/) bots and lists that track official 
 
 If you're here to suggest new countries or domains, thank you! The best way to get started is to [open an issue in this repo](https://github.com/nas5w/govsky/issues) and we can discuss adding it.
 
-## Contributors
+### Contributors
+
+Big thanks to the following folks for making Govsky happen!
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
