@@ -1,4 +1,12 @@
 export const config = {
+  be: {
+    name: "Belgium",
+    domains: [".belgium.be"],
+  },
+  at: {
+    name: "Austria",
+    domains: [".gv.at"],
+  },
   au: {
     name: "Australia",
     domains: [".gov.au"],
