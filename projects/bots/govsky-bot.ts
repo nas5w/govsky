@@ -128,9 +128,13 @@ export class GovskyBot {
 
     // Unfollow
     for (const user of toRemove) {
-      console.log(`Unfollowing ${user.handle}`);
-      await this.unfollow(user);
-      unfollowedCount++;
+      try {
+        console.log(`Unfollowing ${user.handle}`);
+        await this.unfollow(user);
+        unfollowedCount++;
+      } catch {
+        console.log(`Could not unfollow ${user.handle}`);
+      }
     }
 
     console.log(`${followedCount} followed, ${unfollowedCount} unfollowed`);
