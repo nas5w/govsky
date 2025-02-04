@@ -41,7 +41,7 @@ export const config = {
   },
   jp: {
     name: "Japan",
-    domains: [".go.jp", ".metro.tokyo.jp"],
+    domains: [".go.jp", ".lg.jp", ".metro.tokyo.jp"],
   },
   ua: {
     name: "Ukraine",
