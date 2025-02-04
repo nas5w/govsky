@@ -39,9 +39,13 @@ export const config = {
     name: "Island of Jersey",
     domains: [".gov.je"],
   },
+  ua: {
+    name: "Ukraine",
+    domains: [".gov.ua"],
+  },
   uk: {
     name: "United Kingdom",
-    domains: [".gov.uk", ".parliament.uk"],
+    domains: [".gov.uk", ".parliament.uk", ".gov.wales"],
   },
   us: {
     name: "United States",
