@@ -35,6 +35,10 @@ export const config = {
     name: "France",
     domains: [".gouv.fr", ".senat.fr", ".service-public.fr"],
   },
+  int: {
+    name: "Intergovernmental",
+    domains: [".int"],
+  },
   je: {
     name: "Island of Jersey",
     domains: [".gov.je"],
