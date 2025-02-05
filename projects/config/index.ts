@@ -1,8 +1,4 @@
 export const config = {
-  be: {
-    name: "Belgium",
-    domains: [".belgium.be"],
-  },
   at: {
     name: "Austria",
     domains: [".gv.at"],
@@ -10,6 +6,10 @@ export const config = {
   au: {
     name: "Australia",
     domains: [".gov.au"],
+  },
+  be: {
+    name: "Belgium",
+    domains: [".belgium.be"],
   },
   br: {
     name: "Brazil",
@@ -34,6 +34,10 @@ export const config = {
   fr: {
     name: "France",
     domains: [".gouv.fr", ".senat.fr", ".service-public.fr"],
+  },
+  int: {
+    name: "Intergovernmental",
+    domains: [".int"],
   },
   je: {
     name: "Island of Jersey",
