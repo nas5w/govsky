@@ -2,7 +2,7 @@ import { ApiUser } from "@govsky/api/types";
 import { config } from "@govsky/config";
 import { BotConfig } from "./types";
 
-export const govskyUsBot: BotConfig = {
+const govskyUsBot: BotConfig = {
   name: "Govsky US",
   handle: process.env.GOVSKY_US_HANDLE || "",
   password: process.env.GOVSKY_US_PW || "",
@@ -28,7 +28,7 @@ export const govskyUsBot: BotConfig = {
   ],
 };
 
-export const govskyUkBot: BotConfig = {
+const govskyUkBot: BotConfig = {
   name: "Govsky UK",
   handle: process.env.GOVSKY_UK_HANDLE || "",
   password: process.env.GOVSKY_UK_PW || "",
@@ -48,7 +48,7 @@ export const govskyUkBot: BotConfig = {
   ],
 };
 
-export const govskyEuBot: BotConfig = {
+const govskyEuBot: BotConfig = {
   name: "Govsky EU",
   handle: process.env.GOVSKY_EU_HANDLE || "",
   password: process.env.GOVSKY_EU_PW || "",
@@ -67,3 +67,25 @@ export const govskyEuBot: BotConfig = {
     },
   ],
 };
+
+const govskyIntBot: BotConfig = {
+  name: "Govsky Int",
+  handle: process.env.GOVSKY_INT_HANDLE || "",
+  password: process.env.GOVSKY_INT_PW || "",
+  domains: config.int.domains,
+  welcomeMessage: (user: ApiUser) => {
+    const name = user.displayName
+      ? `${user.displayName} (@${user.handle})`
+      : `@${user.handle}`;
+    return `${name} is on Bluesky!`;
+  },
+  lists: [
+    {
+      description: "All Int",
+      uri: "at://did:plc:ufb4svenfc4vfm7udj34tpcu/app.bsky.graph.list/3lhh5zvnv432k",
+      addHandleToListTest: () => true,
+    },
+  ],
+};
+
+export const botConfigs = [govskyUsBot, govskyUkBot, govskyEuBot, govskyIntBot];
