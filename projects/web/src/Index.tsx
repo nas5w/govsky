@@ -19,8 +19,8 @@ export const Index = () => {
           </h2>
           <p className="text-muted-foreground text-lg">
             Welcome! Govsky is an effort to catalog government presence on
-            Bluesky by tracking when officially government domains sign up for
-            the service.
+            Bluesky by tracking when official accounts verified with government
+            domains sign up for the service.
           </p>
         </div>
 

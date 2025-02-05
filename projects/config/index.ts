@@ -39,6 +39,10 @@ export const config = {
     name: "Island of Jersey",
     domains: [".gov.je"],
   },
+  jp: {
+    name: "Japan",
+    domains: [".go.jp", ".lg.jp", ".metro.tokyo.jp"],
+  },
   my:  {
     name: "Malaysia",
     domains: [".gov.my"]
