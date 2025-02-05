@@ -43,6 +43,18 @@ export const config = {
     name: "Japan",
     domains: [".go.jp", ".lg.jp", ".metro.tokyo.jp"],
   },
+  my:  {
+    name: "Malaysia",
+    domains: [".gov.my"]
+  },
+  ph: {
+    name: "Philippines",
+    domains: [".gov.ph"],
+  },
+  sg: {
+    name: "Singapore",
+    domains: [".gov.sg"],
+  },
   ua: {
     name: "Ukraine",
     domains: [".gov.ua"],
@@ -54,6 +66,10 @@ export const config = {
   us: {
     name: "United States",
     domains: [".gov", ".mil"],
+  },
+  vn: {
+    name: "Vietnam",
+    domains: [".gov.vn"],
   },
 } as const;
 
