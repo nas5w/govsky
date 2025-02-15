@@ -6,7 +6,9 @@ const agent = new AtpAgent({ service: "https://public.api.bsky.app" });
 const prisma = new GovskyPrismaClient();
 
 export function validate(extensions: string[]) {
-  runValidation(extensions);
+  runValidation(extensions).catch((e) => {
+    console.error("Failed validation run", e);
+  });
 }
 
 async function runValidation(extensions: string[]) {

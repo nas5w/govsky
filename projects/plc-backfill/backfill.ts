@@ -51,7 +51,9 @@ export async function backfill() {
   plcAgent.startExport(
     (data) => {
       console.log(data.latestRecord, data.records.length);
-      addHandles(data.records, data.latestRecord);
+      addHandles(data.records, data.latestRecord).catch((e) => {
+        console.error("Failed adding handles", e);
+      });
     },
     () => {
       backfillIsRunning = false;
