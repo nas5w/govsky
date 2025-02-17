@@ -7,9 +7,13 @@ export const config = {
     name: "Australia",
     domains: [".gov.au"],
   },
+  ba: {
+    name: "Bosnia & Herzegovina",
+    domains: [".gov.ba"],
+  },
   be: {
     name: "Belgium",
-    domains: [".belgium.be"],
+    domains: [".belgium.be", ".vlaanderen.be", ".wallonie.be"],
   },
   br: {
     name: "Brazil",
@@ -19,13 +23,25 @@ export const config = {
     name: "Canada",
     domains: [".gc.ca", ".canada.ca"],
   },
+  ch: {
+    name: "Switzerland",
+    domains: [".admin.ch"],
+  },
   co: {
     name: "Colombia",
     domains: [".gov.co"],
   },
+  cz: {
+    name: "Czechia",
+    domains: [".gov.cz"],
+  },
   de: {
     name: "Germany",
-    domains: [".bund.de", ".bundesregierung.de", ".bundestag.de"],
+    domains: [".bund.de", ".bundesregierung.de", ".bundestag.de", ".diplo.de", ".bundeswehr.de"],
+  },
+  es: {
+    name: "Spain",
+    domains: [".gob.es"],
   },
   eu: {
     name: "European Union",
@@ -34,6 +50,14 @@ export const config = {
   fr: {
     name: "France",
     domains: [".gouv.fr", ".senat.fr", ".service-public.fr"],
+  },
+  hr: {
+    name: "Croatia",
+    domains: [".gov.hr"],
+  },
+  ie: {
+    name: "Ireland",
+    domains: [".gov.ie"],
   },
   int: {
     name: "Intergovernmental",
@@ -47,6 +71,18 @@ export const config = {
     name: "Japan",
     domains: [".go.jp", ".lg.jp", ".metro.tokyo.jp"],
   },
+  lu: {
+    name: "Luxembourg",
+    domains: [".etat.lu", ".public.lu", ".gouvernement.lu", ".monarchie.lu", ".chd.lu"],
+  },
+  me: {
+    name: "Montenegro",
+    domains: [".gov.me"],
+  },
+  mk: {
+    name: "North Macedonia",
+    domains: [".gov.mk"],
+  },
   my:  {
     name: "Malaysia",
     domains: [".gov.my"]
@@ -55,9 +91,25 @@ export const config = {
     name: "Philippines",
     domains: [".gov.ph"],
   },
+  pl: {
+    name: "Poland",
+    domains: [".gov.pl"],
+  },
+  pt: {
+    name: "Portugal",
+    domains: [".gov.pt"],
+  },
+  rs: {
+    name: "Serbia",
+    domains: [".gov.rs"],
+  },
   sg: {
     name: "Singapore",
     domains: [".gov.sg"],
+  },
+  si: {
+    name: "Slovenia",
+    domains: [".gov.si"],
   },
   ua: {
     name: "Ukraine",
@@ -65,7 +117,7 @@ export const config = {
   },
   uk: {
     name: "United Kingdom",
-    domains: [".gov.uk", ".parliament.uk", ".gov.wales"],
+    domains: [".gov.uk", ".parliament.uk", ".gov.scot", ".gov.wales", ".parliament.scot", ".senedd.wales", ".senedd.cymru"],
   },
   us: {
     name: "United States",
