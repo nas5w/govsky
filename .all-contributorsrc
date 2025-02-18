@@ -43,6 +43,15 @@
         "code",
         "ideas"
       ]
+    },
+    {
+      "login": "HarisDotParis",
+      "name": "Haris",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67912527?v=4",
+      "profile": "http://haris.paris",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
