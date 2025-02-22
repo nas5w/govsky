@@ -12,5 +12,9 @@ export type DomainHandles = {
 export type TreeNode = {
   name: string;
   children: TreeNode[];
-  metadata?: { handle?: string; displayName: string | null };
+  metadata?: {
+    handle?: string;
+    displayName: string | null;
+    childCount?: number;
+  };
 };
