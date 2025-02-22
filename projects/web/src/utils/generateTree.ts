@@ -92,5 +92,22 @@ export function generateTree(
     }
   }
 
+  getChildCount(topLevel);
+
   return flattenTree(topLevel);
+}
+
+function getChildCount(node: TreeNode) {
+  if (node.metadata?.childCount) {
+    return node.metadata.childCount;
+  }
+
+  const childCount: number = node.children.reduce((acc, child) => {
+    return acc + Math.max(getChildCount(child), 1);
+  }, 0);
+
+  if (!node.metadata) node.metadata = { displayName: null };
+  node.metadata.childCount = childCount;
+
+  return childCount;
 }

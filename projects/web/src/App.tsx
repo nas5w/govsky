@@ -189,8 +189,10 @@ function App() {
 
                           {hasChildren ? (
                             <div className="text-sm text-muted-foreground">
-                              {element.children.length} account
-                              {element.children.length === 1 ? "" : "s"}
+                              {element.metadata?.childCount} account
+                              {(element.metadata?.childCount || 0) === 1
+                                ? ""
+                                : "s"}
                             </div>
                           ) : (
                             <Button
