@@ -2,8 +2,8 @@ import { backfill } from "./backfill";
 import { validate } from "./validate";
 import { allowedExtensions } from "@govsky/config";
 
-const BACKFILL_INTERVAL = 5 * 60_000;
-const VALIDATION_INTERVAL = 5 * 60_000;
+const BACKFILL_INTERVAL = 15 * 60_000;
+const VALIDATION_INTERVAL = 15 * 60_000;
 
 // Start process that keeps PLC directory up-to-date
 console.log("Starting backfill cron");

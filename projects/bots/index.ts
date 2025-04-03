@@ -3,7 +3,7 @@ import { GovskyBot } from "./govsky-bot";
 import { getUserForAllDomains } from "./helpers";
 import { botConfigs } from "./configs";
 
-const BOT_INTERVAL = 5 * 60_000;
+const BOT_INTERVAL = 15 * 60_000;
 
 dotenv.config();
 
