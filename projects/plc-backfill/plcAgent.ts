@@ -50,7 +50,7 @@ export class PlcAgent {
     }
     // Check for invalid domains
     const [part1, part2] = handle.split(".").reverse();
-    if (part1.length < 2 || part2.length < 2) {
+    if (!part2 || part1.length < 2 || part2.length < 2) {
       return false;
     }
     return true;
