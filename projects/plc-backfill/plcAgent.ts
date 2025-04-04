@@ -16,6 +16,14 @@ function delay(ms: number) {
   });
 }
 
+let knownSpamDomains = new Set<string>([]);
+
+try {
+  knownSpamDomains = new Set(
+    (process.env.SPAM_DOMAINS || "").toLocaleLowerCase().split(",")
+  );
+} catch {}
+
 export class PlcAgent {
   private requestDelayMs = 500;
   private backoffDelay = 120_000;
@@ -61,7 +69,10 @@ export class PlcAgent {
     if (handleParts.some((part) => part.length >= 50)) {
       return false;
     }
-
+    // There are some known, non-gov spam domains
+    if (knownSpamDomains.has(handleParts[1])) {
+      return false;
+    }
     return true;
   }
 
