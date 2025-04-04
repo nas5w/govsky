@@ -43,6 +43,19 @@ export class PlcAgent {
     this.startExport(callback, doneCallback);
   }
 
+  private isValidHandle(handle: string) {
+    // Maximum domain is 263 characters. Anything higher is shenanigans.
+    if (handle.replace(/\./g, "").length > this.maxHandleLength) {
+      return false;
+    }
+    // Check for invalid domains
+    const [part1, part2] = handle.split(".").reverse();
+    if (part1.length < 2 || part2.length < 2) {
+      return false;
+    }
+    return true;
+  }
+
   private async getData(): Promise<CallbackPayload | null> {
     const res = await fetch(
       `https://plc.directory/export?count=${
@@ -76,10 +89,8 @@ export class PlcAgent {
         if (!handle.endsWith(".bsky.social")) {
           const shortenedHandle = handle.replace(/^at:\/\//, "");
 
-          // Maximum domain is 263 characters. Anything higher is shenanigans.
-          if (
-            shortenedHandle.replace(/\./g, "").length > this.maxHandleLength
-          ) {
+          // Make sure the handle is reasonable
+          if (!this.isValidHandle(shortenedHandle)) {
             continue;
           }
 
