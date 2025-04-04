@@ -49,10 +49,19 @@ export class PlcAgent {
       return false;
     }
     // Check for invalid domains
-    const [part1, part2] = handle.split(".").reverse();
-    if (!part2 || part1.length < 2 || part2.length < 2) {
+    const handleParts = handle.split(".").reverse();
+    if (
+      !handleParts[1] ||
+      handleParts[0].length < 2 ||
+      handleParts[1].length < 2
+    ) {
       return false;
     }
+    // It's very unlikely any legitimate handle part will be over 50 characters
+    if (handleParts.some((part) => part.length >= 50)) {
+      return false;
+    }
+
     return true;
   }
 
