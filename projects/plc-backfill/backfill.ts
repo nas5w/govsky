@@ -1,14 +1,24 @@
 import { PlcAgent, PlcRecord } from "./plcAgent";
 import { GovskyPrismaClient } from "@govsky/database";
+import { allowedExtensions } from "@govsky/config";
 
 const prisma = new GovskyPrismaClient();
 
 const LATEST_RECORD_SETTING_KEY = "latestRecord";
 
 async function addHandles(records: PlcRecord[], latestRecord: Date) {
-  if (records.length) {
+  console.log(`Finding matches for domains: ${allowedExtensions.join(", ")}`);
+  const matchingRecords = records.filter((record) => {
+    return allowedExtensions.some((ext) =>
+      record.handle.toLowerCase().endsWith(ext.toLowerCase())
+    );
+  });
+
+  console.log(`Matching records: ${matchingRecords.length}`);
+
+  if (matchingRecords.length) {
     await prisma.user.createMany({
-      data: records.map((record) => {
+      data: matchingRecords.map((record) => {
         const handleParts = record.handle.split(".");
         const handlePart1 = handleParts.pop() || "";
         const handlePart2 = handleParts.pop() || "";
@@ -50,7 +60,8 @@ export async function backfill() {
 
   plcAgent.startExport(
     (data) => {
-      console.log(data.latestRecord, data.records.length);
+      console.log(`Latest record: ${data.latestRecord}`);
+      console.log(`Total records: ${data.records.length}`);
       addHandles(data.records, data.latestRecord).catch((e) => {
         console.error("Failed adding handles", e);
       });
