@@ -10,6 +10,6 @@ export async function getUserForAllDomains(domains: BotConfig["domains"]) {
   );
   const responses = await Promise.all(requests);
   return responses.reduce((acc, el) => {
-    return [...acc, ...el.data];
+    return Array.isArray(el.data) ? [...acc, ...el.data] : acc;
   }, [] as ApiUser[]);
 }
