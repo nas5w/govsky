@@ -52,24 +52,28 @@ export async function backfill() {
     return;
   }
 
-  const latestRecord = await prisma.setting.findFirst({
-    where: { key: LATEST_RECORD_SETTING_KEY },
-  });
+  try {
+    const latestRecord = await prisma.setting.findFirst({
+      where: { key: LATEST_RECORD_SETTING_KEY },
+    });
 
-  const plcAgent = new PlcAgent(new Date(latestRecord?.value || 0));
+    const plcAgent = new PlcAgent(new Date(latestRecord?.value || 0));
 
-  plcAgent.startExport(
-    (data) => {
-      console.log(`Latest record: ${data.latestRecord}`);
-      console.log(`Total records: ${data.records.length}`);
-      addHandles(data.records, data.latestRecord).catch((e) => {
-        console.error("Failed adding handles", e);
-      });
-    },
-    () => {
-      backfillIsRunning = false;
-    }
-  );
+    plcAgent.startExport(
+      (data) => {
+        console.log(`Latest record: ${data.latestRecord}`);
+        console.log(`Total records: ${data.records.length}`);
+        addHandles(data.records, data.latestRecord).catch((e) => {
+          console.error("Failed adding handles", e);
+        });
+      },
+      () => {
+        backfillIsRunning = false;
+      }
+    );
+  } catch {
+    console.error("Failed to start backfill");
+  }
 }
 
 // Disconnect from DB on shutdown
