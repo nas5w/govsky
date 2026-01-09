@@ -156,9 +156,19 @@ export class GovskyBot {
     }
 
     await this.atpAgent.follow(user.did);
-    const rt = new RichText({ text: this.config.welcomeMessage(user) });
-    await rt.detectFacets(this.atpAgent);
-    await this.atpAgent.post({ text: rt.text, facets: rt.facets });
+
+    // Check if user has been announced in recent posts
+    const alreadyAnnounced = await this.hasUserBeenAnnounced(user.handle);
+    if (alreadyAnnounced) {
+      console.log(
+        `User ${user.handle} has already been announced, skipping announcement`
+      );
+    } else {
+      const rt = new RichText({ text: this.config.welcomeMessage(user) });
+      await rt.detectFacets(this.atpAgent);
+      await this.atpAgent.post({ text: rt.text, facets: rt.facets });
+    }
+
     await this.rateLimitDelay();
   }
 
@@ -175,6 +185,29 @@ export class GovskyBot {
     const toAdd = users.filter((u) => !existingUsers.has(u.did));
     const toRemove = ownFollowing.filter((u) => !newUsers.has(u.did));
     return { toAdd, toRemove };
+  }
+
+  async getRecentPosts(limit: number = 50) {
+    if (!this.botDid) {
+      throw new Error("Bot must be logged in");
+    }
+
+    const feed = await this.atpAgent.app.bsky.feed.getAuthorFeed({
+      actor: this.botDid,
+      limit: Math.min(limit, 100),
+    });
+
+    return feed.data.feed;
+  }
+
+  async hasUserBeenAnnounced(userHandle: string) {
+    const recentPosts = await this.getRecentPosts(50);
+
+    // Check if the user's handle appears in any recent posts
+    return recentPosts.some((item) => {
+      const record = item.post.record as { text?: string } | undefined;
+      return record?.text?.includes(`@${userHandle}`) ?? false;
+    });
   }
 
   async getListMembers(listUri: string) {
