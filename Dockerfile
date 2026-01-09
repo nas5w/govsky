@@ -29,6 +29,7 @@ COPY . .
 # Install deps
 RUN rm -rf common/temp
 RUN rush update --purge
+RUN npx update-browserslist-db@latest
 RUN rush build
 RUN rush deploy -p @govsky/api --overwrite
 
