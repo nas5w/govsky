@@ -20,6 +20,9 @@ FROM base AS build
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential node-gyp openssl pkg-config git python-is-python3 && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Ignore browserslist warnings
+ENV BROWSERSLIST_IGNORE_OLD_DATA=1
+
 # Install rush
 RUN npm install -g @microsoft/rush@5.148.0
 
@@ -29,7 +32,6 @@ COPY . .
 # Install deps
 RUN rm -rf common/temp
 RUN rush update --purge
-RUN npx update-browserslist-db@latest
 RUN rush build
 RUN rush deploy -p @govsky/api --overwrite
 
